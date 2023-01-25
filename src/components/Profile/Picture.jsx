@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import defaultPhoto from "../../assets/images/defaultProfile.jpg";
+import defaultPhoto from "../../assets/images/defaultProfile.png";
 
 export default function Picture({...props}){
   const photo = props.photo ? props.photo : defaultPhoto

@@ -9,7 +9,7 @@ export default function Menu(){
   const location = useLocation();
 
   function selectButton(path){
-    return location.pathname === path;
+    return location.pathname.includes(path);
   }
 
   return(

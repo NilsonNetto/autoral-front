@@ -6,6 +6,7 @@ import Lists from "./pages/Lists";
 import History from "./pages/History";
 import Share from "./pages/Share";
 import Profile from "./pages/Profile";
+import ListPage from "./pages/ListPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/lists" element={<Lists/>} />
+        <Route path="/lists/:id" element={<ListPage/>} /> 
         <Route path="/history" element={<History/>} />
         <Route path="/share" element={<Share/>} />
         <Route path="/profile" element={<Profile/>} />
