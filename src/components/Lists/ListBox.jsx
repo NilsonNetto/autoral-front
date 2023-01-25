@@ -1,8 +1,12 @@
 import styled from "styled-components";
 import dayjs from "dayjs";
 import {BiDotsVerticalRounded} from "react-icons/bi"
+import { useState } from "react";
+
+import ListMenu from "./ListMenu";
 
 export default function ListBox ({listData}){
+  const [showMenu, setShowMenu] = useState(false);
 
   return (
     <ListBoxWrapper>
@@ -10,8 +14,9 @@ export default function ListBox ({listData}){
         <span>{listData.name}</span>
         <span>{dayjs(listData.date).format('DD/MM')}</span>
       </ListName>
-      <ListOptions>
+      <ListOptions onClick={() => setShowMenu(!showMenu)}>
         <BiDotsVerticalRounded />
+        <ListMenu show={showMenu}/>
       </ListOptions>
     </ListBoxWrapper>
   )
@@ -27,6 +32,7 @@ const ListBoxWrapper = styled.div`
   justify-content: space-between;
   color: #D96E6B;
   padding: 0 5px 0 15px;
+  position: relative;
 `
 
 const ListName = styled.div`
