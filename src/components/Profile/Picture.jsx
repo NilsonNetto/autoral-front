@@ -11,7 +11,7 @@ export default function Picture({...props}){
         <img src={photo} alt='Profile picture' />
       </Image>
       <ChangePicture onClick={()=> alert('hello')}>
-        Trocar foto
+        Trocar Foto
       </ChangePicture>
     </PictureWrapper>
   )

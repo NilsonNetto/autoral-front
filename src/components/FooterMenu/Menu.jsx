@@ -29,7 +29,7 @@ export default function Menu(){
       <Link to="/buy">
         <MenuButton selected={selectButton('/buy')}>
           <IoMdCart/> 
-          <p>Iniciar<br/>compra</p>
+          <p>Iniciar<br/>Compra</p>
         </MenuButton>
       </Link>
       <Link to="/share">
@@ -59,9 +59,13 @@ const FooterWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   padding-top: 10px;
+  border-top: 5px solid #E58C8A;
 
   a{
     width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
     text-decoration: none;
   }
 `

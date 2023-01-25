@@ -17,7 +17,7 @@ export default function Profile(){
   return(
     <ProfileContainer>
       <Header>
-        Profile
+        Perfil
       </Header>
       <PictureWrapper>
         <Picture photo={""}/>
@@ -68,7 +68,7 @@ export default function Profile(){
           disabled={false}
           required={true}
         />
-        <Button onClick={() => alert("hello")}>
+        <Button onClick={() => alert("hello")} topMargin={'20px'}>
           SALVAR
         </Button>
       </FormsWrapper>
@@ -104,8 +104,4 @@ const FormsWrapper = styled.div`
   margin-bottom: 10px;
   padding: 0 30px;
   gap: 15px;
-
-  button{
-    margin-top: 20px;
-  }
 `

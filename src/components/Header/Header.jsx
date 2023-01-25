@@ -33,9 +33,10 @@ const HeaderText = styled.div`
   font-size: 25px;
   font-weight: 400;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   text-align: center;
+  margin-bottom: 7px;
 `
 
 const HeaderLine = styled.div`
