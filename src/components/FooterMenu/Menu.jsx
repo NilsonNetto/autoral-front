@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link, useLocation } from "react-router-dom";
 import {RxHamburgerMenu, RxClock, RxPaperPlane, RxPerson} from "react-icons/rx"
-import {IoMdCart} from "react-icons/io"
+import {BsCart3} from "react-icons/bs"
 
 import MenuButton from "./MenuButton";
 
@@ -28,7 +28,7 @@ export default function Menu(){
       </Link>
       <Link to="/buy">
         <MenuButton selected={selectButton('/buy')}>
-          <IoMdCart/> 
+          <BsCart3/> 
           <p>Iniciar<br/>Compra</p>
         </MenuButton>
       </Link>
