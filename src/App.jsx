@@ -6,7 +6,8 @@ import Lists from "./pages/Lists";
 import History from "./pages/History";
 import Share from "./pages/Share";
 import Profile from "./pages/Profile";
-import ListPage from "./pages/ListPage";
+import NewList from "./pages/NewList";
+import BuyLocal from "./pages/BuyLocal";
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/lists" element={<Lists/>} />
-        <Route path="/lists/:id" element={<ListPage/>} /> 
+        <Route path="/lists/:id" element={<NewList/>} /> 
+        <Route path="/buy/:listId/:localId" element={<BuyLocal/>} />
         <Route path="/history" element={<History/>} />
         <Route path="/share" element={<Share/>} />
         <Route path="/profile" element={<Profile/>} />

@@ -2,8 +2,8 @@ import { useState } from "react";
 import styled from "styled-components";
 import {IoMdClose} from "react-icons/io";
 
-export default function ItemsBox(){
-  const [check, setCheck] = useState(true);
+export default function NewItemBox(){
+  const [check, setCheck] = useState(false);
   const [unit, setUnit] = useState('');
   return(
     <ItemsBoxWrapper>

@@ -6,6 +6,7 @@ import Menu from "../components/FooterMenu/Menu";
 import Picture from "../components/Profile/Picture";
 import CustomInput from "../components/Form/CustomInput";
 import Button from "../components/Form/Button";
+import { Link } from "react-router-dom";
 
 export default function Profile(){
   const [name, setName] = useState('');
@@ -71,6 +72,7 @@ export default function Profile(){
         <Button onClick={() => alert("hello")} topMargin={'20px'}>
           SALVAR
         </Button>
+        <Link to={'/'}>Sair da conta</Link>
       </FormsWrapper>
       <Menu />
     </ProfileContainer>
@@ -104,4 +106,10 @@ const FormsWrapper = styled.div`
   margin-bottom: 10px;
   padding: 0 30px;
   gap: 15px;
+
+  a{
+    font-size: 12px;
+    font-weight: 400;
+    color: #B1B1B1;
+  }
 `

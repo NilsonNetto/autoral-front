@@ -2,14 +2,20 @@ import styled from "styled-components";
 import dayjs from "dayjs";
 import {BiDotsVerticalRounded} from "react-icons/bi"
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import ListMenu from "./ListMenu";
 
 export default function ListBox ({listData}){
   const [showMenu, setShowMenu] = useState(false);
+  const navigate = useNavigate();
+
+  function toListPage(id){
+    navigate(`/lists/${id}`)
+  }
 
   return (
-    <ListBoxWrapper>
+    <ListBoxWrapper onClick={()=>toListPage(listData.id)}>
       <ListName>
         <span>{listData.name}</span>
         <span>{dayjs(listData.date).format('DD/MM')}</span>
