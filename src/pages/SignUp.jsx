@@ -25,7 +25,7 @@ export default function SignUp() {
       }
       try {
         await register(registerData);
-        toast("Cadastro realizad!");
+        toast("Cadastro realizado!");
         navigate('/');  
       } catch (error) {
         toast("Erro nas informações!");

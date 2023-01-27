@@ -1,19 +1,51 @@
 import styled from "styled-components"
-import { useState } from "react";
+import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import Header from "../components/Header/Header";
 import Menu from "../components/FooterMenu/Menu";
 import Picture from "../components/Profile/Picture";
 import CustomInput from "../components/Form/CustomInput";
 import Button from "../components/Form/Button";
-import { Link } from "react-router-dom";
+import useGetProfile from "../hooks/api/useGetProfile";
+import useUpdateProfile from "../hooks/api/useUpdateProfile";
 
 export default function Profile(){
   const [name, setName] = useState('');
-  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [photo, setPhoto] = useState('');
+
+  const { getProfileData } = useGetProfile();
+  const { updateProfileLoading, updateProfile } = useUpdateProfile();
+
+  useEffect(() =>{
+    if(getProfileData){
+      setName(getProfileData.name);
+      setEmail(getProfileData.email);
+      setPhoto(getProfileData.profilePicture);
+    }
+  }, [getProfileData])
+
+  async function submitUpdate(){
+    if(password !== passwordConfirm){
+      toast('Senhas não são iguais!');
+    } else {
+      const profileData = {
+        name,
+        email,
+        password
+      }
+      try {
+        await updateProfile(profileData);
+        toast('Dados de perfil atualizados!');
+      } catch (error) {
+        toast('Erro ao atualizar perfil');
+      }
+    }
+  }
 
   return(
     <ProfileContainer>
@@ -21,7 +53,7 @@ export default function Profile(){
         Perfil
       </Header>
       <PictureWrapper>
-        <Picture photo={""}/>
+        <Picture photo={photo}/>
       </PictureWrapper>
       <FormsWrapper>
         <CustomInput
@@ -30,16 +62,7 @@ export default function Profile(){
           type={"text"}
           value={name}
           onChange={setName}
-          disabled={false}
-          required={true}
-        />
-        <CustomInput
-          title={"Username"}
-          placeholder={"Username"}
-          type={"text"}
-          value={username}
-          onChange={setUsername}
-          disabled={false}
+          disabled={updateProfileLoading}
           required={true}
         />
         <CustomInput
@@ -48,7 +71,7 @@ export default function Profile(){
           type={"email"}
           value={email}
           onChange={setEmail}
-          disabled={false}
+          disabled={updateProfileLoading}
           required={true}
         />        
         <CustomInput
@@ -57,7 +80,7 @@ export default function Profile(){
           type={"password"}
           value={password}
           onChange={setPassword}
-          disabled={false}
+          disabled={updateProfileLoading}
           required={true}
         />
         <CustomInput
@@ -66,10 +89,10 @@ export default function Profile(){
           type={"password"}
           value={passwordConfirm}
           onChange={setPasswordConfirm}
-          disabled={false}
+          disabled={updateProfileLoading}
           required={true}
         />
-        <Button onClick={() => alert("hello")} topMargin={'20px'}>
+        <Button onClick={() => submitUpdate()} topMargin={'20px'}>
           SALVAR
         </Button>
         <Link to={'/'}>Sair da conta</Link>

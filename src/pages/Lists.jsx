@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { useNavigate } from "react-router-dom";
 
 import Header from "../components/Header/Header"
 import Menu from "../components/FooterMenu/Menu";
@@ -6,42 +7,25 @@ import Button from "../components/Form/Button";
 import EmptyLists from "../components/Lists/EmptyLists";
 import ListBox from "../components/Lists/ListBox";
 
-const mockLists = [
-  {
-  id: 1,
-  name: "Lista 01",
-  date: new Date()
-  },{
-  id: 2,
-  name: "Lista 02",
-  date: new Date()
-  },
-  {
-  id: 6,
-  name: "Lista 03",
-  date: new Date()
-  },
-  {
-  id: 4,
-  name: "Lista 04",
-  date: new Date()
-  }
-]
+import useGetLists from "../hooks/api/useGetLists";
 
 export default function Lists (){
+  const {listData} = useGetLists();
+  const navigate = useNavigate();
+
   return(
     <ListsContainer>
       <Header>
         Listas
       </Header>
       <ButtonWrapper>
-        <Button topMargin={"25px"}>
+        <Button topMargin={"25px"} onClick={()=>navigate('/lists/1')}>
           + NOVA LISTA
         </Button>
       </ButtonWrapper>
     <ListsWrapper >
-      {mockLists ? (
-        mockLists.map((listData) => <ListBox key={listData.id} listData={listData} />)
+      {listData ? (
+        listData.map((listData) => <ListBox key={listData.id} listData={listData} />)
       ) : (
         <EmptyLists />
       )
