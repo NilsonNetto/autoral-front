@@ -1,15 +1,38 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import styled from "styled-components";
+
+import logo from "../assets/images/logo.png";
+import useLogin from "../hooks/api/useLogin";
+import UserContext from "../contexts/UserContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {loginLoading, login} = useLogin();
+  const { setUserData } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  async function submitLogin(){
+    const loginData = {
+      email,
+      password
+    }
+    try {
+      const userData = await login(loginData);
+      setUserData(userData);
+      toast('Login realizado!')
+      navigate('/lists');
+    } catch (error) {
+      toast('Informações erradas!');
+    }
+  }
 
   return (
     <LoginWrapper>
       <LogoWrapper>
-        <h1>RISUTO</h1>
+        <img src={logo} alt='Risuto'/>
       </LogoWrapper>
       <FormsWrapper>
         <input
@@ -17,7 +40,7 @@ export default function Login() {
           type="email"
           value={email}
           onChange={ (e) => {setEmail(e.target.value)}}
-          disabled={false}
+          disabled={loginLoading}
           required
         />
         <input
@@ -25,10 +48,10 @@ export default function Login() {
           type="password"
           value={password}
           onChange={ (e) => {setPassword(e.target.value)}}
-          disabled={false}
+          disabled={loginLoading}
           required
         />
-        <button disabled={false}>
+        <button disabled={loginLoading} onClick={() => submitLogin()}>
           ENTRAR
         </button>
 
@@ -49,13 +72,11 @@ const LoginWrapper = styled.div`
 `;
 
 const LogoWrapper = styled.div`
-  font-weight: 900;
-  font-size: 60px;
-  color: #FCB75D;
+  width: 200px;
+  height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 50px;
 `;
 
 const FormsWrapper = styled.div`
@@ -95,6 +116,7 @@ const FormsWrapper = styled.div`
   }
 
   p, a{
+    color: #FFFFFF;
     margin-top: 20px;
     font-size: 12px;
     font-weight: 600;

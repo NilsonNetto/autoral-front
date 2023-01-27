@@ -1,17 +1,42 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import styled from "styled-components";
+
+import logo from "../assets/images/logo.png"
+import useRegister from "../hooks/api/useRegister";
 
 export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const { registerLoading, register } = useRegister();
+  const navigate = useNavigate();
+
+  async function submitRegister(){
+    if(password !== passwordConfirm){
+      toast("Senhas não são iguais!");
+    } else {
+      const registerData = {
+        name,
+        email,
+        password
+      }
+      try {
+        await register(registerData);
+        toast("Cadastro realizad!");
+        navigate('/');  
+      } catch (error) {
+        toast("Erro nas informações!");
+      }
+    }
+  }
 
   return (
     <SignUpWrapper>
       <LogoWrapper>
-        <h1>RISUTO</h1>
+        <img src={logo} alt='Risuto'/>
       </LogoWrapper>
       <FormsWrapper>
         <input
@@ -19,7 +44,7 @@ export default function SignUp() {
           type="text"
           value={name}
           onChange={ (e) => {setName(e.target.value)}}
-          disabled={false}
+          disabled={registerLoading}
           required
         />
         <input
@@ -27,7 +52,7 @@ export default function SignUp() {
           type="email"
           value={email}
           onChange={ (e) => {setEmail(e.target.value)}}
-          disabled={false}
+          disabled={registerLoading}
           required
         />
         <input
@@ -35,7 +60,7 @@ export default function SignUp() {
           type="password"
           value={password}
           onChange={ (e) => {setPassword(e.target.value)}}
-          disabled={false}
+          disabled={registerLoading}
           required
         />
         <input
@@ -43,10 +68,10 @@ export default function SignUp() {
           type="password"
           value={passwordConfirm}
           onChange={ (e) => {setPasswordConfirm(e.target.value)}}
-          disabled={false}
+          disabled={registerLoading}
           required
         />
-        <button disabled={false}>
+        <button disabled={registerLoading} onClick={()=> submitRegister()}>
           CADASTRAR
         </button>
 
@@ -67,13 +92,11 @@ const SignUpWrapper = styled.div`
 `;
 
 const LogoWrapper = styled.div`
-  font-weight: 900;
-  font-size: 60px;
-  color: #FCB75D;
+  width: 200px;
+  height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 50px;
 `;
 
 const FormsWrapper = styled.div`
@@ -113,6 +136,7 @@ const FormsWrapper = styled.div`
   }
 
   p, a{
+    color: #FFFFFF;
     margin-top: 20px;
     font-size: 12px;
     font-weight: 600;

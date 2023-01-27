@@ -1,36 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useContext } from 'react';
 
-export default function useAsync(handler, immediate = true) {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(immediate);
-  const [error, setError] = useState(null);
+import UserContext from '../contexts/UserContext';
 
-  const act = async (...args) => {
-    setLoading(true);
-    setError(null);
+export default function useToken() {
+  const { userData: user } = useContext(UserContext);
 
-    try {
-      const newData = await handler(...args);
-      setData(newData);
-      setLoading(false);
-      return data;
-    } catch (err) {
-      setError(err);
-      setLoading(false);
-      throw err;
-    }
-  };
-
-  useEffect(() => {
-    if (immediate) {
-      act();
-    }
-  }, []);
-
-  return {
-    data,
-    loading,
-    error,
-    act
-  };
+  return user.token;
 }
