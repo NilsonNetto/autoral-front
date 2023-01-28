@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 
 import CustomInput from "../Form/CustomInput";
-import NewItemBox from "../Items/NewItemBox";
+import EditItemBox from "../Items/EditItemBox";
 import ConfirmButton from "../Form/SmallButton";
 import SmallButton from "../Form/SmallButton";
 
@@ -16,25 +16,40 @@ export default function EditLocalBox ({localData}){
   const [itemName, setItemName] = useState('');
   const [itemQuantity, setItemQuantity] = useState('');
   const [itemUnit, setItemUnit] = useState('');
+  const [refreshItems, setRefreshItems] = useState(false);
   const { postItem } = usePostItem();
-  const { getItemsData } = useGetItems(localData.id);
+  const { getItemsData, getItems } = useGetItems();
+
+  useEffect(()=>{
+    getItems(localData.id)
+  },[refreshItems])
+
+  function clearItem(){
+    setItemCheck(false);
+    setItemName('');
+    setItemQuantity('');
+    setItemUnit('');
+    setRefreshItems(!refreshItems)
+  }
 
   async function submitItem(){
     const itemData = {
       name: itemName,
       quantity: Number(itemQuantity),
-      unit: itemUnit
+      unit: itemUnit,
+      checked: itemCheck
     }
-    console.log(itemData);
+
     try {
       await postItem(localData.id, itemData);
+      clearItem();
       toast('Item inserido!');
     } catch (error) {
       toast('Não foi possível inserir o item!');
     }
   }
 
-  console.log(getItemsData);
+  console.log(getItemsData?.listLocalsItems);
 
   return(
     <EditLocalBoxWrapper>
@@ -52,11 +67,9 @@ export default function EditLocalBox ({localData}){
           <ConfirmButton />
         </Confirm>
       </LocalTitle>
-{/*       <ItemsWrapper>
-        <NewItemBox />
-        <NewItemBox />
-        <NewItemBox />
-      </ItemsWrapper> */}
+      <ItemsWrapper>
+        {getItemsData?.listLocalsItems.map(itemData => <EditItemBox key={itemData.id} itemData={itemData}/>)}
+      </ItemsWrapper>
       <NewItem>
         <CheckBox
           type='checkbox'
@@ -73,13 +86,13 @@ export default function EditLocalBox ({localData}){
         /> 
         <QuantityBox
           type='text'
+          placeholder="Qtdade."
           value={itemQuantity}
           onChange={(e) => setItemQuantity(e.target.value)}
-          placeholder="Qtdade."
           pattern={[1,100]}
         >
         </QuantityBox>
-        <UnitBox defaultValue={'un'} onChange={(e) => setItemUnit(e.target.value)}>
+        <UnitBox defaultValue={itemUnit} onChange={(e) => setItemUnit(e.target.value)}>
           <option value={'un'}>Un.</option>
           <option value={'kgs'}>Kgs</option>
         </UnitBox>

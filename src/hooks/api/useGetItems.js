@@ -3,7 +3,7 @@ import useToken from '../useToken';
 
 import * as itemsApi from '../../services/itemsApi';
 
-export default function useGetItems(listLocalId) {
+export default function useGetItems() {
   const token = useToken();
 
   const {
@@ -11,7 +11,7 @@ export default function useGetItems(listLocalId) {
     loading: getItemsLoading,
     error: getItemsError,
     act: getItems
-  } = useAsync(() => itemsApi.getItems(listLocalId, token), true);
+  } = useAsync((listLocalId) => itemsApi.getItems(listLocalId, token), false);
 
   return {
     getItemsData,

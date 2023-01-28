@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export default function ItemMenu({show}){
+export default function ItemMenu({show, setEditItem}){
   return(
     <ItemMenuWrapper show={show}>
-      <div>
+      <div onClick={()=> setEditItem(true)}>
         Editar Item
       </div>
       <div>
@@ -18,7 +18,7 @@ const ItemMenuWrapper = styled.div`
   top: 0;
   right: 0;
   z-index: 1;
-  width: 200px;
+  width: 130px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -26,7 +26,7 @@ const ItemMenuWrapper = styled.div`
   border-radius: 5px;
   display: ${props => props.show ? 'flex' : 'none'};
   color: #D88416;
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 400;
   padding: 10px;
   gap: 15px;

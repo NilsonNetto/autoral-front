@@ -12,12 +12,27 @@ import EditLocalBox from "../components/Locals/EditLocalBox";
 
 import useGetLocals from "../hooks/api/useGetLocals";
 import usePostLocal from "../hooks/api/usePostLocal";
+import useGetListName from "../hooks/api/useGetListName";
 
 export default function EditList(){
+  //const [listName, setListName] = useState();
   const [localName, setLocalName] = useState('');
+  const [refreshLocal, setRefreshLocal] = useState(false);
   const { listId } = useParams();
-  const { getLocalsData } = useGetLocals(listId);
+  const navigate = useNavigate();
+  const { getListNameData, getListName } = useGetListName();
+  const { getLocalsData , getLocals} = useGetLocals();
   const { postLocal } = usePostLocal();
+
+  useEffect(()=>{
+    getListName(listId);
+    getLocals(listId);
+  },[refreshLocal])
+
+  function clearLocal(){
+    setLocalName('');
+    setRefreshLocal(!refreshLocal);
+  }
 
   async function submitLocal(){
     const localData = {
@@ -25,26 +40,33 @@ export default function EditList(){
     }
     try {
       await postLocal(listId, localData);
+      clearLocal();
       toast('Local inserido!');
     } catch (error) {
       toast('Não foi possível inserir o local!');
     }
   }
 
+  /* useEffect(()=>{
+    if(getListNameData){
+      setListName(getListNameData.name)
+    }
+  },[getListNameData]) */
+
   return(
     <EditListContainer>
       <Header>
-        Nome da lista
+        {getListNameData?.name}
       </Header>
-      <CustomInput 
+      {/* <CustomInput 
         title='Nome da Lista'
         placeholder='Nome da Lista'
         type='text'
-        value={'aa'}
-        onChange={'setListName'}
+        value={listName}
+        onChange={setListName}
         disabled={false}
         required={true}
-      />
+      /> */}
       { getLocalsData?.map((localData) => <EditLocalBox key={localData.id} localData={localData}/>)}
 
       <NewLocal>
@@ -62,7 +84,7 @@ export default function EditList(){
         </Confirm>
       </NewLocal>
 
-      <Button topMargin={'30px'} onClick={() => {submitList()}}>
+      <Button topMargin={'30px'} onClick={() => {navigate('/lists')}}>
           SALVAR LISTA
       </Button>
       <Menu />

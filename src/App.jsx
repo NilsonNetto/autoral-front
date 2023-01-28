@@ -26,7 +26,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/lists" element={<Lists/>} />
           <Route path="/lists/:listId" element={<EditList/>} /> 
-          <Route path="/buy/:listId/:localId" element={<BuyLocal/>} />
+          <Route path="/buy" element={<BuyLocal/>} />
           <Route path="/history" element={<History/>} />
           <Route path="/share" element={<Share/>} />
           <Route path="/profile" element={<Profile/>} />

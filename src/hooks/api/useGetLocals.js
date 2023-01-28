@@ -3,7 +3,7 @@ import useToken from '../useToken';
 
 import * as localsApi from '../../services/localsApi';
 
-export default function useGetLocals(listId) {
+export default function useGetLocals() {
   const token = useToken();
 
   const {
@@ -11,7 +11,7 @@ export default function useGetLocals(listId) {
     loading: getLocalsLoading,
     error: getLocalsError,
     act: getLocals
-  } = useAsync(() => localsApi.getLocals(listId, token), true);
+  } = useAsync((listId) => localsApi.getLocals(listId, token), false);
 
   return {
     getLocalsData,
