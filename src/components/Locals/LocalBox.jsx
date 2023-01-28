@@ -2,16 +2,16 @@ import styled from "styled-components";
 
 import ItemBox from "../Items/ItemBox";
 
-export default function LocalBox(){
+export default function LocalBox({localData}){
+  
+
   return(
     <LocalBoxWrapper>
       <LocalTitle>
         Nome do local
       </LocalTitle>
       <ItemsWrapper>
-        <ItemBox />
-        <ItemBox />
-        <ItemBox />
+        {localData.listLocalsItems.map(itemData => <ItemBox key={itemData.id} itemData={itemData} />)}
       </ItemsWrapper>
     </LocalBoxWrapper>
   )

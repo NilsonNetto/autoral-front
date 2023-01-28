@@ -1,18 +1,30 @@
 import styled from "styled-components"
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import Header from "../components/Header/Header"
 import Menu from "../components/FooterMenu/Menu"
 import LocalBox from "../components/Locals/LocalBox";
 import Button from "../components/Form/Button";
 
+import useGetItems from "../hooks/api/useGetItems";
 
 export default function BuyLocal(){
+  const {listLocalId} = useParams();
+  const { getItemsData, getItems } = useGetItems();
+  
+  useEffect(()=>{
+    getItems(listLocalId);
+  },[])
+
+  console.log(getItemsData);
+
   return(
     <BuyLocalContainer>
       <Header>
-        Nome da lista
+        Iniciar Compra
       </Header>
-      <LocalBox />
+      {getItemsData ? <LocalBox localData={getItemsData}/> : <></>}     
       <Button topMargin={'30px'}>
         FINALIZAR COMPRA
       </Button>

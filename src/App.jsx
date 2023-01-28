@@ -10,6 +10,8 @@ import History from "./pages/History";
 import Share from "./pages/Share";
 import Profile from "./pages/Profile";
 import EditList from "./pages/EditList";
+import Buy from "./pages/Buy";
+import BuyList from "./pages/BuyList";
 import BuyLocal from "./pages/BuyLocal";
 
 function App() {
@@ -26,7 +28,9 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/lists" element={<Lists/>} />
           <Route path="/lists/:listId" element={<EditList/>} /> 
-          <Route path="/buy" element={<BuyLocal/>} />
+          <Route path="/buy" element={<Buy/>} />
+          <Route path="/buy/:listId" element={<BuyList/>} />
+          <Route path="/buy/:listId/:listLocalId" element={<BuyLocal/>} />
           <Route path="/history" element={<History/>} />
           <Route path="/share" element={<Share/>} />
           <Route path="/profile" element={<Profile/>} />

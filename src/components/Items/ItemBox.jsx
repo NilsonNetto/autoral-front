@@ -1,42 +1,53 @@
 import { useState } from "react";
 import styled from "styled-components";
-import {HiOutlineDotsVertical} from "react-icons/hi";
 
 import ItemMenu from "./ItemMenu";
+import SmallButton from "../Form/SmallButton";
 
 export default function ItemBox({itemData}){
-  const [check, setCheck] = useState(false);
-  const [edit, setEdit] = useState(false);
+  const [itemCheck, setItemCheck] = useState(itemData.status);
+  const [itemName, setItemName] = useState(itemData.items.name);
+  const [itemQuantity, setItemQuantity] = useState(itemData.quantity);
+  const [itemUnit, setItemUnit] = useState(itemData.unit);
   const [showMenu, setShowMenu] = useState(false);
+  const [editItem, setEditItem] = useState(false);
 
   return(
     <ItemBoxWrapper>
       <CheckBox
         type='checkbox'
-        checked={check}
-        onChange={() => setCheck(!check)}
+        checked={itemCheck}
+        onChange={() => setItemCheck(!itemCheck)}
       />
-      <ItemName check={check}>
-        Nome do item
-      </ItemName> 
+      <ItemName 
+        placeholder='Nome do item'
+        type='text'
+        value={itemName}
+        onChange={(e)=> setItemName(e.target.value)}
+        disabled={!editItem}
+        required={true}
+      />
       <QuantityBox
         type='text'
         placeholder="Qtdade."
-        pattern='{1,100}'
-        disabled={!edit}
+        value={itemQuantity}
+        onChange={(e) => setItemQuantity(e.target.value)}
+        pattern={[1,100]}
+        disabled={!editItem}
       >
       </QuantityBox>
       <UnitBox 
-        defaultValue={'un'} 
-        onChange={(e) => {setUnit(e.target.value)}}
-        disabled={!edit}>
-          <option value={'un'}>Un.</option>
-          <option value={'kgs'}>Kgs</option>
+        defaultValue={itemUnit} 
+        onChange={(e) => {setItemUnit(e.target.value)}}
+        disabled={!editItem}
+        >
+        <option value={'un'}>Un.</option>
+        <option value={'kgs'}>Kgs</option>
       </UnitBox>
-      <OptionBox onClick={()=>setShowMenu(!showMenu)}>
-        <HiOutlineDotsVertical />
-        <ItemMenu show={showMenu}/>
-      </OptionBox>
+      <Confirm onClick={()=>setShowMenu(!showMenu)}>
+        <SmallButton/>
+        <ItemMenu show={showMenu} setEditItem={setEditItem}/>
+      </Confirm>
     </ItemBoxWrapper>
   )
 }
@@ -65,12 +76,16 @@ const CheckBox = styled.input`
   }  
 `
 
-const ItemName = styled.span`
+const ItemName = styled.input`
   width: 100%;
   font-size: 14px;
-  font-weight: 500;
-  color: ${props => props.check ? '#B1B1B1' : '#3C3C3C'} ;
-  text-decoration: ${props => props.check ? 'line-through' : 'none'};
+  font-weight: 400;
+  border: none;
+  background-color: transparent;
+
+  :focus{
+    outline: none;
+}
 `
 
 const QuantityBox = styled.input`
@@ -110,7 +125,8 @@ const UnitBox = styled.select`
   }
 `
 
-const OptionBox = styled.div`
+const Confirm = styled.div`
+  position: relative;
   font-size: 18px;
   color: #D88416;
 `
