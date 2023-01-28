@@ -1,17 +1,37 @@
 import styled from "styled-components"
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import Header from "../components/Header/Header"
 import Menu from "../components/FooterMenu/Menu";
+import CustomInput from "../components/Form/CustomInput";
 import Button from "../components/Form/Button";
 import EmptyLists from "../components/Lists/EmptyLists";
 import ListBox from "../components/Lists/ListBox";
 
 import useGetLists from "../hooks/api/useGetLists";
+import usePostList from "../hooks/api/usePostList";
 
 export default function Lists (){
-  const {listData} = useGetLists();
+  const [listName, setListName] = useState('');
+  const [hideInput, setHideInput] = useState(true);
+  const { getListsData } = useGetLists();
+  const { postList } = usePostList();
   const navigate = useNavigate();
+
+  async function submitList(){
+    try {
+      const listData = {
+        name: listName
+      }
+      
+      const createdList = await postList(listData);
+      navigate(`/lists/${createdList.id}`);
+    } catch (error) { 
+      toast('Não foi possível criar a lista!');
+    }
+  }
 
   return(
     <ListsContainer>
@@ -19,13 +39,29 @@ export default function Lists (){
         Listas
       </Header>
       <ButtonWrapper>
-        <Button topMargin={"25px"} onClick={()=>navigate('/lists/1')}>
-          + NOVA LISTA
-        </Button>
+        <CustomInput 
+          title='Nome da Lista'
+          placeholder='Nome da Lista'
+          type='text'
+          value={listName}
+          onChange={setListName}
+          disabled={false}
+          required={true}
+          hide={hideInput}
+        />
+        {hideInput ? (
+          <Button topMargin={"15px"} onClick={()=>setHideInput(false)}>
+            + NOVA LISTA
+          </Button>
+        ) : (
+          <Button topMargin={"25px"} onClick={()=>submitList()}>
+            CRIAR LISTA
+          </Button>
+        )}
       </ButtonWrapper>
     <ListsWrapper >
-      {listData ? (
-        listData.map((listData) => <ListBox key={listData.id} listData={listData} />)
+      {getListsData ? (
+        getListsData.map((listData) => <ListBox key={listData.id} listData={listData} />)
       ) : (
         <EmptyLists />
       )
@@ -41,13 +77,13 @@ const ListsContainer = styled.div`
   width: 100%;
   height: 100%;
   margin-top: 55px;
-  margin-bottom: 80px;
+  margin-bottom: 100px;
 `
 
 const ButtonWrapper = styled.div`
   width: 100%;
   height: 100%;
-  padding: 0 50px;
+  padding: 10px 50px 0 50px;
 `
 
 const ListsWrapper = styled.div`

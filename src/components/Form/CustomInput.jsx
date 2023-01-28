@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export default function CustomInput({...props}){
   return(
-    <InputWrapper>
+    <InputWrapper hide={props.hide}>
       <InputTitle>
         {props.title}
       </InputTitle>
@@ -21,6 +21,7 @@ export default function CustomInput({...props}){
 const InputWrapper = styled.div`
   width: 100%;
   height: 40px;
+  display: ${props => props.hide ? 'none' : 'initial'};
 `
 
 const InputTitle = styled.h3`

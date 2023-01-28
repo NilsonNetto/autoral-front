@@ -1,23 +1,24 @@
 import styled from "styled-components";
+import {GiCheckMark} from "react-icons/gi";
+import {GoKebabVertical} from "react-icons/go";
 
-export default function SmallButton({children, ...props}){
+export default function SmallButton({type}){
   return(
-    <SmallButtonWrapper onClick={props.onClick} topMargin={props.topMargin} bottomMargin={props.bottomMargin}>
-      {children}
+    <SmallButtonWrapper>
+      {type === 'confirm' ? (
+        <GiCheckMark />
+      ) : (
+        <GoKebabVertical />
+      )}
     </SmallButtonWrapper>
   )
 }
 
-const SmallButtonWrapper = styled.button`
-  width: auto;
-  height: 20px;
-  color: #B1B1B1;
-  background-color: #FFFFFF;
-  border: 1px solid #D7D2D2;
-  border-radius: 5px;
-  font-size: 10px;
-
-  :active{
-    transform: translate(1px, 2px);
-  }
+const SmallButtonWrapper = styled.div`
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #29B91D;
 `

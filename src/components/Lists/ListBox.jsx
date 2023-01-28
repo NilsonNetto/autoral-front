@@ -17,8 +17,8 @@ export default function ListBox ({listData}){
   return (
     <ListBoxWrapper onClick={()=>toListPage(listData.id)}>
       <ListName>
-        <span>{listData.name}</span>
-        <span>{dayjs(listData.date).format('DD/MM')}</span>
+        <span>{listData.lists.name}</span>
+        <span>{dayjs(listData.createdAt).format('DD/MM')}</span>
       </ListName>
       <ListOptions onClick={() => setShowMenu(!showMenu)}>
         <BiDotsVerticalRounded />

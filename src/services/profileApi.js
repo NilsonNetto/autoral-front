@@ -18,3 +18,11 @@ export async function updateProfile(body, token) {
   return response.data;
 }
 
+export async function updatePicture(body, token) {
+  const response = await api.put('/profile/picture', body, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  return response.data;
+}
