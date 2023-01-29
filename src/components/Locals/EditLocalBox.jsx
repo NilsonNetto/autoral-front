@@ -49,7 +49,6 @@ export default function EditLocalBox ({localData}){
     }
   }
 
-  console.log(getItemsData?.listLocalsItems);
 
   return(
     <EditLocalBoxWrapper>

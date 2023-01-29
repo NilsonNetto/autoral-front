@@ -16,8 +16,6 @@ export default function BuyLocal(){
     getLocals(listId);
   },[])
 
-  console.log(getLocalsData);
-
   return(
     <BuyLocalContainer>
       <Header>

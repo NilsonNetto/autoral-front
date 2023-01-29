@@ -1,15 +1,36 @@
 import styled from "styled-components";
+import { useState } from "react";
+
+import StyledModal from "../Form/StyledModal";
 
 export default function ItemMenu({show, setEditItem}){
-  return(
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  function toggleModal(){
+    setModalIsOpen(!modalIsOpen);
+  }
+
+  function editItem(){
+    setEditItem(true)
+  }
+
+   return(
+    <>
     <ItemMenuWrapper show={show}>
-      <div onClick={()=> setEditItem(true)}>
+      <div onClick={() => editItem()}>
         Editar Item
       </div>
-      <div>
+      <div onClick={() => toggleModal()}>
         Excluir Item
       </div>
     </ItemMenuWrapper>
+    <StyledModal  
+      isOpen={modalIsOpen}
+      toggleModal = {toggleModal}
+    >
+      Excluir item?
+    </StyledModal>
+    </>
   )
 }
 

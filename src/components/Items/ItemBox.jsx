@@ -17,6 +17,7 @@ export default function ItemBox({itemData}){
       <CheckBox
         type='checkbox'
         checked={itemCheck}
+        value={itemCheck}
         onChange={() => setItemCheck(!itemCheck)}
       />
       <ItemName 

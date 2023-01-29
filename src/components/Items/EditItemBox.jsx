@@ -12,11 +12,16 @@ export default function EditItemBox({itemData}){
   const [showMenu, setShowMenu] = useState(false);
   const [editItem, setEditItem] = useState(false);
 
+  function toggleMenu(){
+    setShowMenu(!showMenu);
+  }
+
   return(
     <EditItemBoxWrapper>
       <CheckBox
         type='checkbox'
         checked={itemCheck}
+        value={itemCheck}
         onChange={() => setItemCheck(!itemCheck)}
         disabled={!editItem}
       />
@@ -45,8 +50,8 @@ export default function EditItemBox({itemData}){
         <option value={'un'}>Un.</option>
         <option value={'kgs'}>Kgs</option>
       </UnitBox>
-      <Confirm onClick={()=>setShowMenu(!showMenu)}>
-        <SmallButton/>
+      <Confirm onClick={()=>toggleMenu()}>
+        <SmallButton type={editItem ? 'confirm' : ''}/>
         <ItemMenu show={showMenu} setEditItem={setEditItem}/>
       </Confirm>
     </EditItemBoxWrapper>
