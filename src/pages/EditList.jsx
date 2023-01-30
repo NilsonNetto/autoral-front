@@ -71,7 +71,7 @@ export default function EditList(){
 
       <NewLocal>
         <CustomInput 
-          title='Novo do Local'
+          title='Novo Local'
           placeholder='Nome do Local'
           type='text'
           value={localName}

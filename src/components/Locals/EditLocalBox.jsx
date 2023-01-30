@@ -12,7 +12,6 @@ import useGetItems from "../../hooks/api/Items/useGetItems";
 
 export default function EditLocalBox ({localData}){
   const [localName, setLocalName] = useState(localData.LocalsName.name);
-  const [itemCheck, setItemCheck] = useState(false);
   const [itemName, setItemName] = useState('');
   const [itemQuantity, setItemQuantity] = useState('');
   const [itemUnit, setItemUnit] = useState('');
@@ -25,7 +24,6 @@ export default function EditLocalBox ({localData}){
   },[refreshItems])
 
   function clearItem(){
-    setItemCheck(false);
     setItemName('');
     setItemQuantity('');
     setItemUnit('');
@@ -53,7 +51,7 @@ export default function EditLocalBox ({localData}){
     <EditLocalBoxWrapper>
       <LocalTitle>
         <CustomInput 
-          title='Nome do Local'
+          title='Local'
           placeholder='Nome do Local'
           type='text'
           value={localName}
@@ -67,13 +65,8 @@ export default function EditLocalBox ({localData}){
       </LocalTitle>
       <ItemsWrapper>
         {getItemsData?.Items.map(itemData => <EditItemBox key={itemData.id} itemData={itemData}/>)}
-      </ItemsWrapper>
+      
       <NewItem>
-        <CheckBox
-          type='checkbox'
-          checked={itemCheck}
-          onChange={() => setItemCheck(!itemCheck)}
-        />
         <ItemName 
           placeholder='Nome do item'
           type='text'
@@ -94,10 +87,11 @@ export default function EditLocalBox ({localData}){
           <option value={'un'}>Un.</option>
           <option value={'kgs'}>Kgs</option>
         </UnitBox>
-        <Confirm onClick={()=>submitItem()}>
+        <ItemConfirm onClick={()=>submitItem()}>
           <SmallButton type={'confirm'}/>
-        </Confirm>
+        </ItemConfirm>
       </NewItem>
+      </ItemsWrapper>
     </EditLocalBoxWrapper>
   )
 }
@@ -140,21 +134,6 @@ const NewItem = styled.div`
   border-bottom: 2px solid #D7D2D2;
   color: #3C3C3C;
   gap: 10px;
-  padding-right: 30px;
-`
-
-const CheckBox = styled.input`
-  width: 25px;
-  height: 25px;
-  border: 1px solid #D7D2D2;
-
-  :focus{
-    outline: none;
-  }
-
-  :checked{
-    background-color: #29B91D;
-  }  
 `
 
 const ItemName = styled.input`
@@ -180,6 +159,7 @@ const QuantityBox = styled.input`
   text-align: center;
 
   :focus{
+    background-color: #D7D2D2;
     outline: none;
   }
 
@@ -203,4 +183,10 @@ const UnitBox = styled.select`
   :focus{
     background-color: #D7D2D2;
   }
+`
+
+const ItemConfirm = styled.div`
+  position: relative;
+  font-size: 16px;
+  color: #D88416;
 `

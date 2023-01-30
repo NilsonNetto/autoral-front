@@ -5,7 +5,6 @@ import ItemMenu from "../Items/ItemMenu";
 import SmallButton from "../Form/SmallButton";
 
 export default function EditItemBox({itemData}){
-  const [itemCheck, setItemCheck] = useState(itemData.checked);
   const [itemName, setItemName] = useState(itemData.ItemName.name);
   const [itemQuantity, setItemQuantity] = useState(itemData.quantity);
   const [itemUnit, setItemUnit] = useState(itemData.unit);
@@ -18,13 +17,6 @@ export default function EditItemBox({itemData}){
 
   return(
     <EditItemBoxWrapper>
-      <CheckBox
-        type='checkbox'
-        checked={itemCheck}
-        value={itemCheck}
-        onChange={() => setItemCheck(!itemCheck)}
-        disabled={!editItem}
-      />
       <ItemName 
         placeholder='Nome do item'
         type='text'
@@ -51,7 +43,7 @@ export default function EditItemBox({itemData}){
         <option value={'kgs'}>Kgs</option>
       </UnitBox>
       <Confirm onClick={()=>toggleMenu()}>
-        <SmallButton type={editItem ? 'confirm' : ''}/>
+        <SmallButton type={editItem ? 'update' : ''}/>
         <ItemMenu show={showMenu} setEditItem={setEditItem}/>
       </Confirm>
     </EditItemBoxWrapper>
