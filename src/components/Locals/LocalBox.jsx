@@ -11,7 +11,7 @@ export default function LocalBox({localData}){
         Nome do local
       </LocalTitle>
       <ItemsWrapper>
-        {localData.listLocalsItems.map(itemData => <ItemBox key={itemData.id} itemData={itemData} />)}
+        {localData.Items.map(itemData => <ItemBox key={itemData.id} itemData={itemData} />)}
       </ItemsWrapper>
     </LocalBoxWrapper>
   )

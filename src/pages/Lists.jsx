@@ -33,6 +33,8 @@ export default function Lists (){
     }
   }
 
+  console.log(getListsData);
+
   return(
     <ListsContainer>
       <Header>

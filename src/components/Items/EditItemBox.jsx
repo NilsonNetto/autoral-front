@@ -5,8 +5,8 @@ import ItemMenu from "../Items/ItemMenu";
 import SmallButton from "../Form/SmallButton";
 
 export default function EditItemBox({itemData}){
-  const [itemCheck, setItemCheck] = useState(itemData.status);
-  const [itemName, setItemName] = useState(itemData.items.name);
+  const [itemCheck, setItemCheck] = useState(itemData.checked);
+  const [itemName, setItemName] = useState(itemData.ItemName.name);
   const [itemQuantity, setItemQuantity] = useState(itemData.quantity);
   const [itemUnit, setItemUnit] = useState(itemData.unit);
   const [showMenu, setShowMenu] = useState(false);

@@ -11,7 +11,7 @@ import usePostItem from "../../hooks/api/usePostItem";
 import useGetItems from "../../hooks/api/useGetItems";
 
 export default function EditLocalBox ({localData}){
-  const [localName, setLocalName] = useState(localData.locals.name);
+  const [localName, setLocalName] = useState(localData.LocalsName.name);
   const [itemCheck, setItemCheck] = useState(false);
   const [itemName, setItemName] = useState('');
   const [itemQuantity, setItemQuantity] = useState('');
@@ -36,8 +36,7 @@ export default function EditLocalBox ({localData}){
     const itemData = {
       name: itemName,
       quantity: Number(itemQuantity),
-      unit: itemUnit,
-      checked: itemCheck
+      unit: itemUnit
     }
 
     try {
@@ -67,7 +66,7 @@ export default function EditLocalBox ({localData}){
         </Confirm>
       </LocalTitle>
       <ItemsWrapper>
-        {getItemsData?.listLocalsItems.map(itemData => <EditItemBox key={itemData.id} itemData={itemData}/>)}
+        {getItemsData?.Items.map(itemData => <EditItemBox key={itemData.id} itemData={itemData}/>)}
       </ItemsWrapper>
       <NewItem>
         <CheckBox

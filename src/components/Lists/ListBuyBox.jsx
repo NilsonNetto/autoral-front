@@ -13,7 +13,7 @@ export default function ListBuyBox ({listData}){
   return (
     <ListBoxWrapper onClick={()=>toListLocals(listData.id)}>
       <ListName>
-        <span>{listData.lists.name}</span>
+        <span>{listData.Lists.name}</span>
         <span>{dayjs(listData.createdAt).format('DD/MM')}</span>
       </ListName>
     </ListBoxWrapper>

@@ -8,7 +8,7 @@ export default function BuyLocalBox({localData}){
   return(
     <BuyLocalBoxWrapper onClick={() => navigate(`/buy/${localData.listId}/${localData.id}`)}>
       <LocalTitle>
-        {localData.locals.name}
+        {localData.LocalsName.name}
       </LocalTitle>
     </BuyLocalBoxWrapper>
   )
