@@ -6,7 +6,7 @@ import Header from "../components/Header/Header"
 import Menu from "../components/FooterMenu/Menu"
 import BuyLocalBox from "../components/Locals/BuyLocalBox";
 
-import useGetLocals from "../hooks/api/useGetLocals";
+import useGetLocals from "../hooks/api/Locals/useGetLocals";
 
 export default function BuyLocal(){
   const { listId } = useParams();

@@ -1,7 +1,7 @@
-import useAsync from '../useAsync';
-import useToken from '../useToken';
+import useAsync from '../../useAsync';
+import useToken from '../../useToken';
 
-import * as localsApi from '../../services/localsApi';
+import * as localsApi from '../../../services/localsApi';
 
 export default function usePostLocal() {
   const token = useToken();

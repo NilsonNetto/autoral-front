@@ -10,8 +10,8 @@ import Button from "../components/Form/Button";
 import EmptyLists from "../components/Lists/EmptyLists";
 import ListBox from "../components/Lists/ListBox";
 
-import useGetLists from "../hooks/api/useGetLists";
-import usePostList from "../hooks/api/usePostList";
+import useGetLists from "../hooks/api/Lists/useGetLists";
+import usePostList from "../hooks/api/Lists/usePostList";
 
 export default function Lists (){
   const [listName, setListName] = useState('');

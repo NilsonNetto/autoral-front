@@ -5,7 +5,7 @@ import Menu from "../components/FooterMenu/Menu"
 import ListBuyBox from "../components/Lists/ListBuyBox";
 import EmptyLists from "../components/Lists/EmptyLists";
 
-import useGetLists from "../hooks/api/useGetLists";
+import useGetLists from "../hooks/api/Lists/useGetLists";
 
 export default function Buy(){
   const { getListsData } = useGetLists();

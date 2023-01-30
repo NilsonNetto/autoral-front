@@ -8,9 +8,9 @@ import Menu from "../components/FooterMenu/Menu";
 import Picture from "../components/Profile/Picture";
 import CustomInput from "../components/Form/CustomInput";
 import Button from "../components/Form/Button";
-import useGetProfile from "../hooks/api/useGetProfile";
-import useUpdateProfile from "../hooks/api/useUpdateProfile";
-import useUpdatePicture from "../hooks/api/useUpdatePicture";
+import useGetProfile from "../hooks/api/Profile/useGetProfile";
+import useUpdateProfile from "../hooks/api/Profile/useUpdateProfile";
+import useUpdatePicture from "../hooks/api/Profile/useUpdatePicture";
 
 
 export default function Profile(){

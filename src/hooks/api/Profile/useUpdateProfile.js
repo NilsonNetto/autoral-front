@@ -1,7 +1,7 @@
-import useAsync from '../useAsync';
-import useToken from '../useToken';
+import useAsync from '../../useAsync';
+import useToken from '../../useToken';
 
-import * as profileApi from '../../services/profileApi';
+import * as profileApi from '../../../services/profileApi';
 
 export default function useUpdateProfile() {
   const token = useToken();

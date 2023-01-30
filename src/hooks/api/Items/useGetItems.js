@@ -1,7 +1,7 @@
-import useAsync from '../useAsync';
-import useToken from '../useToken';
+import useAsync from '../../useAsync';
+import useToken from '../../useToken';
 
-import * as itemsApi from '../../services/itemsApi';
+import * as itemsApi from '../../../services/itemsApi';
 
 export default function useGetItems() {
   const token = useToken();

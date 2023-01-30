@@ -7,7 +7,7 @@ import Menu from "../components/FooterMenu/Menu"
 import LocalBox from "../components/Locals/LocalBox";
 import Button from "../components/Form/Button";
 
-import useGetItems from "../hooks/api/useGetItems";
+import useGetItems from "../hooks/api/Items/useGetItems";
 
 export default function BuyLocal(){
   const {listLocalId} = useParams();

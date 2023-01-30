@@ -7,8 +7,8 @@ import EditItemBox from "../Items/EditItemBox";
 import ConfirmButton from "../Form/SmallButton";
 import SmallButton from "../Form/SmallButton";
 
-import usePostItem from "../../hooks/api/usePostItem";
-import useGetItems from "../../hooks/api/useGetItems";
+import usePostItem from "../../hooks/api/Items/usePostItem";
+import useGetItems from "../../hooks/api/Items/useGetItems";
 
 export default function EditLocalBox ({localData}){
   const [localName, setLocalName] = useState(localData.LocalsName.name);

@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import styled from "styled-components";
 
 import logo from "../assets/images/logo.png"
-import useRegister from "../hooks/api/useRegister";
+import useRegister from "../hooks/api/Auth/useRegister";
 
 export default function SignUp() {
   const [name, setName] = useState("");

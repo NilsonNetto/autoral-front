@@ -1,7 +1,7 @@
-import useAsync from '../useAsync';
-import useToken from '../useToken';
+import useAsync from '../../useAsync';
+import useToken from '../../useToken';
 
-import * as listApi from '../../services/listsApi';
+import * as listApi from '../../../services/listsApi';
 
 export default function usePostList() {
   const token = useToken();

@@ -10,9 +10,9 @@ import SmallButton from "../components/Form/SmallButton";
 import CustomInput from "../components/Form/CustomInput";
 import EditLocalBox from "../components/Locals/EditLocalBox";
 
-import useGetLocals from "../hooks/api/useGetLocals";
-import usePostLocal from "../hooks/api/usePostLocal";
-import useGetListName from "../hooks/api/useGetListName";
+import useGetLocals from "../hooks/api/Locals/useGetLocals";
+import usePostLocal from "../hooks/api/Locals/usePostLocal";
+import useGetListName from "../hooks/api/Lists/useGetListName";
 
 export default function EditList(){
   //const [listName, setListName] = useState();

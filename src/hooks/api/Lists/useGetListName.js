@@ -1,7 +1,7 @@
-import useAsync from '../useAsync';
-import useToken from '../useToken';
+import useAsync from '../../useAsync';
+import useToken from '../../useToken';
 
-import * as listsApi from '../../services/listsApi';
+import * as listsApi from '../../../services/listsApi';
 
 export default function useGetListName() {
   const token = useToken();
