@@ -46,8 +46,6 @@ export default function EditList(){
     }
   }
 
-  console.log({getListNameData, getLocalsData})
-
   return(
     <EditListContainer>
       <Header>

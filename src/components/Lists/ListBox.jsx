@@ -20,9 +20,9 @@ export default function ListBox ({listData}){
 
   return (
     <ListBoxWrapper>
-      <ListName onClick={()=>toListPage(listData.listId)}>
+      <ListName onClick={()=>toListPage(listData.Lists.id)}>
         <span>{listData.Lists.name}</span>
-        <span>{dayjs(listData.createdAt).format('DD/MM')}</span>
+        <span>{dayjs(listData.Lists.createdAt).format('DD/MM')}</span>
       </ListName>
       <ListOptions>
         <BiDotsVerticalRounded onClick={() => toggleMenu()}/>
