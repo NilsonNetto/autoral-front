@@ -14,15 +14,19 @@ export default function ListBox ({listData}){
     navigate(`/lists/${id}`)
   }
 
+  function toggleMenu(){
+    setShowMenu(!showMenu)
+  }
+
   return (
-    <ListBoxWrapper onClick={()=>toListPage(listData.id)}>
-      <ListName>
+    <ListBoxWrapper>
+      <ListName onClick={()=>toListPage(listData.id)}>
         <span>{listData.Lists.name}</span>
         <span>{dayjs(listData.createdAt).format('DD/MM')}</span>
       </ListName>
-      <ListOptions onClick={() => setShowMenu(!showMenu)}>
-        <BiDotsVerticalRounded />
-        <ListMenu show={showMenu}/>
+      <ListOptions>
+        <BiDotsVerticalRounded onClick={() => toggleMenu()}/>
+        <ListMenu show={showMenu} listId={listData.id} toggleMenu={toggleMenu}/>
       </ListOptions>
     </ListBoxWrapper>
   )

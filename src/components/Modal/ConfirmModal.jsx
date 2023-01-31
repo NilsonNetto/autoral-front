@@ -1,25 +1,25 @@
 import styled from "styled-components";
 import {BsCheck2, BsX} from "react-icons/bs"
 
-export default function StyledModal({isOpen, toggleModal, children}){
+export default function ConfirmModal({children, ...props}){
 
   return(
-    <ModalOverlay isOpen={isOpen}>
-      <StyledModalWrapper>
+    <ModalOverlay isOpen={props.isOpen}>
+      <ConfirmModalWrapper>
         <ModalTitle>
           {children}
         </ModalTitle>
         <ModalOptions>
-          <ConfirmBox onClick={() => alert('hello')}>
+          <ConfirmBox onClick={() => props.confirm()}>
             <BsCheck2 />
             <span>SIM</span>
           </ConfirmBox>
-          <CloseBox onClick={() => toggleModal()}>
+          <CloseBox onClick={() => props.toggleModal()}>
             <BsX/>
             <span>NÃO</span>
           </CloseBox>
         </ModalOptions>
-      </StyledModalWrapper>
+      </ConfirmModalWrapper>
     </ModalOverlay>
   )
 }
@@ -37,7 +37,7 @@ const ModalOverlay = styled.div`
   justify-content: center;
 `
 
-const StyledModalWrapper = styled.div`
+const ConfirmModalWrapper = styled.div`
   width: 215px;
   height: 100px;
   display: flex;

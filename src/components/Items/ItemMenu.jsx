@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 
-import StyledModal from "../Form/StyledModal";
+import ConfirmModal from "../Modal/ConfirmModal";
 
 export default function ItemMenu({show, setEditItem}){
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -24,12 +24,12 @@ export default function ItemMenu({show, setEditItem}){
         Excluir Item
       </div>
     </ItemMenuWrapper>
-    <StyledModal  
+    <ConfirmModal  
       isOpen={modalIsOpen}
       toggleModal = {toggleModal}
     >
       Excluir item?
-    </StyledModal>
+    </ConfirmModal>
     </>
   )
 }

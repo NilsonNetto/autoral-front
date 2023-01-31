@@ -9,13 +9,14 @@ import CustomInput from "../components/Form/CustomInput";
 import Button from "../components/Form/Button";
 import EmptyLists from "../components/Lists/EmptyLists";
 import ListBox from "../components/Lists/ListBox";
+import InputModal from "../components/Modal/InputModal";
 
 import useGetLists from "../hooks/api/Lists/useGetLists";
 import usePostList from "../hooks/api/Lists/usePostList";
 
 export default function Lists (){
   const [listName, setListName] = useState('');
-  const [hideInput, setHideInput] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
   const { getListsData } = useGetLists();
   const { postList } = usePostList();
   const navigate = useNavigate();
@@ -33,7 +34,9 @@ export default function Lists (){
     }
   }
 
-  console.log(getListsData);
+  function toggleModal(){
+    setOpenModal(!openModal);
+  }
 
   return(
     <ListsContainer>
@@ -41,25 +44,19 @@ export default function Lists (){
         Listas
       </Header>
       <ButtonWrapper>
-        <CustomInput 
-          title='Nome da Lista'
-          placeholder='Nome da Lista'
-          type='text'
-          value={listName}
-          onChange={setListName}
-          disabled={false}
-          required={true}
-          hide={hideInput}
-        />
-        {hideInput ? (
-          <Button topMargin={"15px"} onClick={()=>setHideInput(false)}>
-            + NOVA LISTA
-          </Button>
-        ) : (
-          <Button topMargin={"25px"} onClick={()=>submitList()}>
-            CRIAR LISTA
-          </Button>
-        )}
+        <Button topMargin={"15px"} onClick={()=>toggleModal()}>
+          + NOVA LISTA
+        </Button>
+      <InputModal
+        isOpen={openModal}
+        toggleModal={toggleModal}
+        placeholder='Nome da lista'
+        value={listName}
+        onChange={setListName}
+        confirm={submitList}
+      >
+            Insira o nome da lista
+      </InputModal>
       </ButtonWrapper>
     <ListsWrapper >
       {getListsData ? (
