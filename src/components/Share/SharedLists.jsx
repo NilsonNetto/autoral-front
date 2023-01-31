@@ -9,7 +9,11 @@ export default function SharedLists({children, listsData}){
         {children}
       </Title>
       <Lists>
-        {listsData.map((list) => <ListBox key={list.id} listData={list}/>)}
+        {listsData?.length === 0 ? (
+          <p>Você ainda não tem listas para exibir</p>
+          ) : (
+          listsData?.map((list) => <ListBox key={list.id} listData={list}/>)
+        )}
       </Lists>      
     </SharedListsWrapper>
   )
@@ -36,10 +40,17 @@ const Title = styled.div`
 const Lists = styled.div`
   width: 100%;
   height: 100%;
+  min-height: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 10px;
   overflow-y: scroll;
+
+  p{
+    text-align: center;
+    font-size: 16px;
+    color: #3C3C3C;
+  }
 `

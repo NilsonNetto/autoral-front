@@ -18,6 +18,15 @@ export async function getSharedOwned(token) {
   return response.data;
 }
 
+export async function getShareRequests(token) {
+  const response = await api.get('/share/requests', {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  return response.data;
+}
+
 export async function postShare(listId, body, token) {
   const response = await api.post(`/share/${listId}`, body, {
     headers: {

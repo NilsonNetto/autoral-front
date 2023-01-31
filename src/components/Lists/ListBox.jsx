@@ -20,7 +20,7 @@ export default function ListBox ({listData}){
 
   return (
     <ListBoxWrapper>
-      <ListName onClick={()=>toListPage(listData.id)}>
+      <ListName onClick={()=>toListPage(listData.listId)}>
         <span>{listData.Lists.name}</span>
         <span>{dayjs(listData.createdAt).format('DD/MM')}</span>
       </ListName>

@@ -8,6 +8,7 @@ import SignUp from "./pages/SignUp";
 import Lists from "./pages/Lists";
 import History from "./pages/History";
 import Share from "./pages/Share";
+import Request from "./pages/Request";
 import Profile from "./pages/Profile";
 import EditList from "./pages/EditList";
 import Buy from "./pages/Buy";
@@ -33,6 +34,7 @@ function App() {
           <Route path="/buy/:listId/:listLocalId" element={<BuyLocal/>} />
           <Route path="/history" element={<History/>} />
           <Route path="/share" element={<Share/>} />
+          <Route path="/share/requests" element={<Request/>} />
           <Route path="/profile" element={<Profile/>} />
           <Route path="/*" element={<Navigate to="/" />} />
         </Routes>

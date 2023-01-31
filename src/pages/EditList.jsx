@@ -15,7 +15,6 @@ import usePostLocal from "../hooks/api/Locals/usePostLocal";
 import useGetListName from "../hooks/api/Lists/useGetListName";
 
 export default function EditList(){
-  //const [listName, setListName] = useState();
   const [localName, setLocalName] = useState('');
   const [refreshLocal, setRefreshLocal] = useState(false);
   const { listId } = useParams();
@@ -47,26 +46,14 @@ export default function EditList(){
     }
   }
 
-  /* useEffect(()=>{
-    if(getListNameData){
-      setListName(getListNameData.name)
-    }
-  },[getListNameData]) */
+  console.log({getListNameData, getLocalsData})
 
   return(
     <EditListContainer>
       <Header>
         {getListNameData?.name}
       </Header>
-      {/* <CustomInput 
-        title='Nome da Lista'
-        placeholder='Nome da Lista'
-        type='text'
-        value={listName}
-        onChange={setListName}
-        disabled={false}
-        required={true}
-      /> */}
+
       { getLocalsData?.map((localData) => <EditLocalBox key={localData.id} localData={localData}/>)}
 
       <NewLocal>

@@ -1,41 +1,45 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Menu from "../components/FooterMenu/Menu";
+import Button from "../components/Form/Button";
 import Header from "../components/Header/Header";
 import SharedLists from "../components/Share/SharedLists";
 
-const mockLists = [
-  {
-  id: 1,
-  name: "Lista 01",
-  date: new Date()
-  },{
-  id: 2,
-  name: "Lista 02",
-  date: new Date()
-  },
-  {
-  id: 6,
-  name: "Lista 03",
-  date: new Date()
-  },
-  {
-  id: 4,
-  name: "Lista 04",
-  date: new Date()
-  }
-]
+import useGetShared from "../hooks/api/Share/useGetShared";
+import useGetSharedOwned from "../hooks/api/Share/useGetSharedOwned";
+import useGetShareRequest from "../hooks/api/Share/useGetShareRequests";
 
 export default function Share(){
+  const navigate = useNavigate();
+  const { getSharedData } = useGetShared();
+  const { getSharedOwnedData } = useGetSharedOwned();
+  const { getShareRequestsData } = useGetShareRequest();
+
+  function requestPageRedirect(){
+    if(getShareRequestsData.length !== 0){
+      navigate('/share/requests');
+    }
+  }
+
   return(
     <ShareContainer>
       <Header>
         Compartilhar
       </Header>
-      <SharedLists listsData={mockLists}>
+      <Button onClick={requestPageRedirect}>
+        { getShareRequestsData?.length === 0 ? (
+          'Você não tem novas requisições'
+        ) : ( getShareRequestsData?.length === 1 ? (
+          `Você tem 1 nova solicitação`
+        ) : (
+          `Você tem ${getShareRequestsData?.length} novas solicitações`
+        ))}
+      </Button>
+      <SharedLists listsData={getSharedData}>
         Listas compartilhadas comigo
       </SharedLists>
-      <SharedLists listsData={mockLists}>
+      <SharedLists listsData={getSharedOwnedData}>
         Listas que compartilhei
       </SharedLists>
       <Menu />
