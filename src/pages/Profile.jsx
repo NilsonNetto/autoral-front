@@ -9,9 +9,9 @@ import Menu from "../components/FooterMenu/Menu";
 import Picture from "../components/Profile/Picture";
 import CustomInput from "../components/Form/CustomInput";
 import Button from "../components/Form/Button";
+
 import useGetProfile from "../hooks/api/Profile/useGetProfile";
 import useUpdateProfile from "../hooks/api/Profile/useUpdateProfile";
-import useUpdatePicture from "../hooks/api/Profile/useUpdatePicture";
 
 export default function Profile(){
   const [name, setName] = useState('');
@@ -19,11 +19,9 @@ export default function Profile(){
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [photo, setPhoto] = useState('');
-  const [newPhoto, setNewPhoto] = useState('');
 
   const { getProfileData, getProfileLoading } = useGetProfile();
   const { updateProfileLoading, updateProfile } = useUpdateProfile();
-  const { updatePicture } = useUpdatePicture();
 
   useEffect(() =>{
     if(getProfileData){
@@ -48,19 +46,6 @@ export default function Profile(){
       } catch (error) {
         toast('Erro ao atualizar perfil');
       }
-    }
-  }
-
-  async function submitPicture(){
-    const profilePicture = {
-      profilePictue: newPhoto
-    }
-    try {
-      await updatePicture(profilePicture);
-      setPhoto(newPhoto);
-      toast('Foto de perfil atualizados!');
-    } catch (error) {
-      toast('Erro ao atualizar foto');
     }
   }
 

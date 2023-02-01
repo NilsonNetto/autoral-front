@@ -1,18 +1,53 @@
 import styled from "styled-components";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 import defaultPhoto from "../../assets/images/defaultProfile.png";
+import InputModal from "../Modal/InputModal";
+
+import useUpdatePicture from "../../hooks/api/Profile/useUpdatePicture";
 
 export default function Picture({...props}){
+  const [newPhoto, setNewPhoto] = useState('');
+  const [openModal, setOpenModal] = useState(false);
   const photo = props.photo ? props.photo : defaultPhoto
+  const { updatePicture } = useUpdatePicture();
+
+  function toggleModal(){
+    setOpenModal(!openModal);
+  }
+
+  async function submitPicture(){
+    const profilePicture = {
+      profilePicture: newPhoto
+    }
+    try {
+      await updatePicture(profilePicture);
+      toggleModal();
+      toast('Foto de perfil atualizados!');
+    } catch (error) {
+      toast('Erro ao atualizar foto');
+    }
+  }
 
   return(
     <PictureWrapper>
       <Image>
         <img src={photo} alt='Profile picture' />
       </Image>
-      <ChangePicture onClick={()=> alert('hello')}>
+      <ChangePicture onClick={()=> toggleModal()}>
         Trocar Foto
       </ChangePicture>
+      <InputModal
+        isOpen={openModal}
+        placeholder='Link da foto'
+        value={newPhoto}
+        onChange={setNewPhoto}
+        confirm={submitPicture}
+        toggleModal={toggleModal}
+      >
+        Insira o link da sua foto
+      </InputModal>
     </PictureWrapper>
   )
 }
