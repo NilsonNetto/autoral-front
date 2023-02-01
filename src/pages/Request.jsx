@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+import Loading from "./Loading";
 import Header from "../components/Header/Header";
 import Menu from "../components/FooterMenu/Menu";
 import RequestBox from "../components/Share/RequestBox";
@@ -7,18 +8,22 @@ import RequestBox from "../components/Share/RequestBox";
 import useGetShareRequests from "../hooks/api/Share/useGetShareRequests";
 
 export default function Request(){
-  const { getShareRequestsData } = useGetShareRequests();
+  const { getShareRequestsData, getShareRequestsLoading } = useGetShareRequests();
   
   return(
-    <RequestContainer>
-      <Header>
-        Solicitações
-      </Header>
-      <RequestsList>
-        {getShareRequestsData?.map(request => <RequestBox key={request.id} requestData={request} />)}
-      </RequestsList>
-      <Menu />
-    </RequestContainer>
+    getShareRequestsLoading ? (
+      <Loading />
+    ) : (
+      <RequestContainer>
+        <Header>
+          Solicitações
+        </Header>
+        <RequestsList>
+          {getShareRequestsData?.map(request => <RequestBox key={request.id} requestData={request} />)}
+        </RequestsList>
+        <Menu />
+      </RequestContainer>
+    )
   )
 }
 

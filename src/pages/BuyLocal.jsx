@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+import Loading from "./Loading";
 import Header from "../components/Header/Header"
 import Menu from "../components/FooterMenu/Menu"
 import LocalBox from "../components/Locals/LocalBox";
@@ -13,7 +14,7 @@ import useFinishLocal from "../hooks/api/Locals/useFinishLocal";
 
 export default function BuyLocal(){
   const { listId, listLocalId } = useParams();
-  const { getItemsData, getItems } = useGetItems();
+  const { getItemsData, getItemsLoading, getItems } = useGetItems();
   const { finishLocal } = useFinishLocal();
   const navigate = useNavigate();
 
@@ -32,16 +33,20 @@ export default function BuyLocal(){
   }
 
   return(
-    <BuyLocalContainer>
-      <Header>
-        Iniciar Compra
-      </Header>
-      {getItemsData ? <LocalBox localData={getItemsData}/> : <></>}     
-      <Button onClick={submitFinish} topMargin={'30px'}>
-        FINALIZAR COMPRA
-      </Button>
-      <Menu />
-    </BuyLocalContainer>
+    getItemsLoading ? (
+      <Loading />
+    ) : (
+      <BuyLocalContainer>
+        <Header>
+          Iniciar Compra
+        </Header>
+        {getItemsData ? <LocalBox localData={getItemsData}/> : <></>}     
+        <Button onClick={submitFinish} topMargin={'30px'}>
+          FINALIZAR COMPRA
+        </Button>
+        <Menu />
+      </BuyLocalContainer>
+    )
   )
 }
 

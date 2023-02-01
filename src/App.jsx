@@ -14,6 +14,7 @@ import EditList from "./pages/EditList";
 import Buy from "./pages/Buy";
 import BuyList from "./pages/BuyList";
 import BuyLocal from "./pages/BuyLocal";
+import Loading from "./pages/Loading";
 
 function App() {
   return (

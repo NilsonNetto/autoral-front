@@ -2,6 +2,7 @@ import styled from "styled-components"
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 
+import Loading from "./Loading";
 import Header from "../components/Header/Header"
 import Menu from "../components/FooterMenu/Menu"
 import BuyLocalBox from "../components/Locals/BuyLocalBox";
@@ -10,22 +11,26 @@ import useGetLocals from "../hooks/api/Locals/useGetLocals";
 
 export default function BuyLocal(){
   const { listId } = useParams();
-  const { getLocalsData, getLocals} = useGetLocals();
+  const { getLocalsData, getLocalsLoading, getLocals} = useGetLocals();
 
   useEffect(()=>{
     getLocals(listId);
   },[])
 
   return(
-    <BuyLocalContainer>
-      <Header>
-        Iniciar Compra
-      </Header>
-      <LocalWrapper>
-        {getLocalsData?.map((localData)=> <BuyLocalBox key={localData.id} localData={localData}/>)}
-      </LocalWrapper>
-      <Menu />
-    </BuyLocalContainer>
+    getLocalsLoading ? (
+      <Loading />
+    ) : (
+      <BuyLocalContainer>
+        <Header>
+          Iniciar Compra
+        </Header>
+        <LocalWrapper>
+          {getLocalsData?.map((localData)=> <BuyLocalBox key={localData.id} localData={localData}/>)}
+        </LocalWrapper>
+        <Menu />
+      </BuyLocalContainer>
+    )
   )
 }
 

@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import Loading from "./Loading";
 import Header from "../components/Header/Header";
 import Menu from "../components/FooterMenu/Menu";
 import Picture from "../components/Profile/Picture";
@@ -12,7 +13,6 @@ import useGetProfile from "../hooks/api/Profile/useGetProfile";
 import useUpdateProfile from "../hooks/api/Profile/useUpdateProfile";
 import useUpdatePicture from "../hooks/api/Profile/useUpdatePicture";
 
-
 export default function Profile(){
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -21,7 +21,7 @@ export default function Profile(){
   const [photo, setPhoto] = useState('');
   const [newPhoto, setNewPhoto] = useState('');
 
-  const { getProfileData } = useGetProfile();
+  const { getProfileData, getProfileLoading } = useGetProfile();
   const { updateProfileLoading, updateProfile } = useUpdateProfile();
   const { updatePicture } = useUpdatePicture();
 
@@ -64,59 +64,62 @@ export default function Profile(){
     }
   }
 
-
   return(
-    <ProfileContainer>
-      <Header>
-        Perfil
-      </Header>
-      <PictureWrapper>
-        <Picture photo={photo}/>
-      </PictureWrapper>
-      <FormsWrapper>
-        <CustomInput
-          title={"Nome"}
-          placeholder={"Nome"}
-          type={"text"}
-          value={name}
-          onChange={setName}
-          disabled={updateProfileLoading}
-          required={true}
-        />
-        <CustomInput
-          title={"E-mail"}
-          placeholder={"E-mail"}
-          type={"email"}
-          value={email}
-          onChange={setEmail}
-          disabled={updateProfileLoading}
-          required={true}
-        />        
-        <CustomInput
-          title={"Alterar Senha"}
-          placeholder={"Nova senha"}
-          type={"password"}
-          value={password}
-          onChange={setPassword}
-          disabled={updateProfileLoading}
-          required={true}
-        />
-        <CustomInput
-          title={"Confirmar senha"}
-          placeholder={"Nova senha"}
-          type={"password"}
-          value={passwordConfirm}
-          onChange={setPasswordConfirm}
-          disabled={updateProfileLoading}
-          required={true}
-        />
-        <Button onClick={() => submitUpdate()} topMargin={'20px'}>
-          SALVAR
-        </Button>
-        <Link to={'/'}>Sair da conta</Link>
-      </FormsWrapper>
-      <Menu />
-    </ProfileContainer>
+    getProfileLoading ? (
+      <Loading />
+    ) : (
+      <ProfileContainer>
+        <Header>
+          Perfil
+        </Header>
+        <PictureWrapper>
+          <Picture photo={photo}/>
+        </PictureWrapper>
+        <FormsWrapper>
+          <CustomInput
+            title={"Nome"}
+            placeholder={"Nome"}
+            type={"text"}
+            value={name}
+            onChange={setName}
+            disabled={updateProfileLoading}
+            required={true}
+          />
+          <CustomInput
+            title={"E-mail"}
+            placeholder={"E-mail"}
+            type={"email"}
+            value={email}
+            onChange={setEmail}
+            disabled={updateProfileLoading}
+            required={true}
+          />        
+          <CustomInput
+            title={"Alterar Senha"}
+            placeholder={"Nova senha"}
+            type={"password"}
+            value={password}
+            onChange={setPassword}
+            disabled={updateProfileLoading}
+            required={true}
+          />
+          <CustomInput
+            title={"Confirmar senha"}
+            placeholder={"Nova senha"}
+            type={"password"}
+            value={passwordConfirm}
+            onChange={setPasswordConfirm}
+            disabled={updateProfileLoading}
+            required={true}
+          />
+          <Button onClick={() => submitUpdate()} topMargin={'20px'}>
+            SALVAR
+          </Button>
+          <Link to={'/'}>Sair da conta</Link>
+        </FormsWrapper>
+        <Menu />
+      </ProfileContainer>
+    )
   )
 }
 

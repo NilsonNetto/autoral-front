@@ -1,5 +1,6 @@
 import styled from "styled-components"
 
+import Loading from "./Loading";
 import Header from "../components/Header/Header"
 import Menu from "../components/FooterMenu/Menu"
 import ListBuyBox from "../components/Lists/ListBuyBox";
@@ -8,22 +9,26 @@ import EmptyLists from "../components/Lists/EmptyLists";
 import useGetLists from "../hooks/api/Lists/useGetLists";
 
 export default function Buy(){
-  const { getListsData } = useGetLists();
+  const { getListsData, getListsLoading } = useGetLists();
 
   return(
-    <BuyContainer>
-      <Header>
-        Iniciar Compra
-      </Header>
-      <ListsWrapper>
-        {getListsData ? (
-          getListsData.map((listData) => <ListBuyBox key={listData.id} listData={listData} />)
-        ) : (
-          <EmptyLists />
-        )}
-      </ListsWrapper>
-      <Menu />
-    </BuyContainer>
+    getListsLoading ? (
+      <Loading />
+    ) : (
+      <BuyContainer>
+        <Header>
+          Iniciar Compra
+        </Header>
+        <ListsWrapper>
+          {getListsData ? (
+            getListsData.map((listData) => <ListBuyBox key={listData.id} listData={listData} />)
+          ) : (
+            <EmptyLists />
+          )}
+        </ListsWrapper>
+        <Menu />
+      </BuyContainer>
+    )
   )
 }
 

@@ -3,9 +3,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import Loading from "./Loading";
 import Header from "../components/Header/Header"
 import Menu from "../components/FooterMenu/Menu";
-import CustomInput from "../components/Form/CustomInput";
 import Button from "../components/Form/Button";
 import EmptyLists from "../components/Lists/EmptyLists";
 import ListBox from "../components/Lists/ListBox";
@@ -17,7 +17,7 @@ import usePostList from "../hooks/api/Lists/usePostList";
 export default function Lists (){
   const [listName, setListName] = useState('');
   const [openModal, setOpenModal] = useState(false);
-  const { getListsData } = useGetLists();
+  const { getListsData, getListsLoading } = useGetLists();
   const { postList } = usePostList();
   const navigate = useNavigate();
 
@@ -39,6 +39,9 @@ export default function Lists (){
   }
 
   return(
+    getListsLoading ? (
+      <Loading />
+    ) : (
     <ListsContainer>
       <Header>
         Listas
@@ -69,6 +72,7 @@ export default function Lists (){
 
       <Menu />
     </ListsContainer>
+    )
   )
 }
 

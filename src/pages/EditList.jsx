@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import Loading from "./Loading";
 import Header from "../components/Header/Header";
 import Menu from "../components/FooterMenu/Menu";
 import Button from "../components/Form/Button";
@@ -20,7 +21,7 @@ export default function EditList(){
   const { listId } = useParams();
   const navigate = useNavigate();
   const { getListNameData, getListName } = useGetListName();
-  const { getLocalsData , getLocals} = useGetLocals();
+  const { getLocalsData , getLocals, getLocalsLoading} = useGetLocals();
   const { postLocal } = usePostLocal();
 
   useEffect(()=>{
@@ -47,6 +48,9 @@ export default function EditList(){
   }
 
   return(
+    getLocalsLoading ? (
+      <Loading />
+    ) : (
     <EditListContainer>
       <Header>
         {getListNameData?.name}
@@ -74,6 +78,7 @@ export default function EditList(){
       </Button>
       <Menu />
     </EditListContainer>
+    )
   )
 }
 
