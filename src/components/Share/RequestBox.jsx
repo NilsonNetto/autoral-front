@@ -10,19 +10,18 @@ export default function RequestBox({requestData}){
   const { postAcceptShare } = usePostAcceptShare();
   const { postRefuseShare } = usePostRefuseShare();
 
-  console.log(requestData);
-  function acceptRequest(){
+  async function acceptRequest(){
     try {
-      postAcceptShare(requestData.id)
+      await postAcceptShare(requestData.id)
       toast('Solicitação aceita!')
     } catch (error) {
       toast('Não foi possível aceitar a solicitação')
     }
   }
 
-  function refuseRequest(){
+  async function refuseRequest(){
     try {
-      postRefuseShare(requestData.id)
+      await postRefuseShare(requestData.id)
       toast('Solicitação rejeitada!')
     } catch (error) {
       toast('Não foi possível rejeitar a solicitação')

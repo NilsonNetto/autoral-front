@@ -11,7 +11,7 @@ export default function ListBuyBox ({listData}){
   }
 
   return (
-    <ListBoxWrapper onClick={()=>toListLocals(listData.id)}>
+    <ListBoxWrapper onClick={()=>toListLocals(listData.Lists.id)}>
       <ListName>
         <span>{listData.Lists.name}</span>
         <span>{dayjs(listData.createdAt).format('DD/MM')}</span>

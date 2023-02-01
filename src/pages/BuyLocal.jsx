@@ -1,6 +1,7 @@
 import styled from "styled-components"
+import { toast } from "react-toastify";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Header from "../components/Header/Header"
 import Menu from "../components/FooterMenu/Menu"
@@ -8,14 +9,27 @@ import LocalBox from "../components/Locals/LocalBox";
 import Button from "../components/Form/Button";
 
 import useGetItems from "../hooks/api/Items/useGetItems";
+import useFinishLocal from "../hooks/api/Locals/useFinishLocal";
 
 export default function BuyLocal(){
-  const {listLocalId} = useParams();
+  const { listId, listLocalId } = useParams();
   const { getItemsData, getItems } = useGetItems();
-  
+  const { finishLocal } = useFinishLocal();
+  const navigate = useNavigate();
+
   useEffect(()=>{
     getItems(listLocalId);
   },[])
+
+  async function submitFinish(){
+    try {
+      await finishLocal(listLocalId)
+      toast('Compra finalizada!')
+      navigate(`/buy/${listId}`)
+    } catch (error) {
+      toast('Não foi possível finalizar a compra')
+    }
+  }
 
   return(
     <BuyLocalContainer>
@@ -23,7 +37,7 @@ export default function BuyLocal(){
         Iniciar Compra
       </Header>
       {getItemsData ? <LocalBox localData={getItemsData}/> : <></>}     
-      <Button topMargin={'30px'}>
+      <Button onClick={submitFinish} topMargin={'30px'}>
         FINALIZAR COMPRA
       </Button>
       <Menu />

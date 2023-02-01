@@ -29,7 +29,7 @@ export default function Share(){
       </Header>
       <Button onClick={requestPageRedirect}>
         { getShareRequestsData?.length === 0 ? (
-          'Você não tem novas requisições'
+          'Você não tem novas solicitações'
         ) : ( getShareRequestsData?.length === 1 ? (
           `Você tem 1 nova solicitação`
         ) : (

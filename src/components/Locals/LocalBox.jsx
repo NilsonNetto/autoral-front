@@ -4,11 +4,10 @@ import ItemBox from "../Items/ItemBox";
 
 export default function LocalBox({localData}){
   
-
   return(
     <LocalBoxWrapper>
       <LocalTitle>
-        Nome do local
+        {localData.LocalsName.name}
       </LocalTitle>
       <ItemsWrapper>
         {localData.Items.map(itemData => <ItemBox key={itemData.id} itemData={itemData} />)}

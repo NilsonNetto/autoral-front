@@ -57,7 +57,8 @@ const ModalTitle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  text-align: center;
+  font-size: 20px;
   font-weight: 400;
 `
 

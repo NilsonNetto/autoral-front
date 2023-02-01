@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import ListBox from "../Lists/ListBox";
+import SharedBox from "./SharedBox";
 
 export default function SharedLists({children, listsData}){
   return (
@@ -12,7 +12,7 @@ export default function SharedLists({children, listsData}){
         {listsData?.length === 0 ? (
           <p>Você ainda não tem listas para exibir</p>
           ) : (
-          listsData?.map((list) => <ListBox key={list.id} listData={list}/>)
+          listsData?.map((list) => <SharedBox key={list.id} sharedData={list}/>)
         )}
       </Lists>      
     </SharedListsWrapper>
@@ -44,7 +44,8 @@ const Lists = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  margin-top: 10px;
   gap: 10px;
   overflow-y: scroll;
 

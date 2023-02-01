@@ -26,6 +26,7 @@ const HistoryContainer = styled.div`
   margin-bottom: 80px;
 
   h1{
+    margin-top: 20px;
     color: #3C3C3C;
   }
 `
