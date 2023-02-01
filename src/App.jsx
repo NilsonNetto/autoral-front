@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import { UserProvider } from "./contexts/UserContext";
@@ -14,7 +14,8 @@ import EditList from "./pages/EditList";
 import Buy from "./pages/Buy";
 import BuyList from "./pages/BuyList";
 import BuyLocal from "./pages/BuyLocal";
-import Loading from "./pages/Loading";
+
+import useToken from "./hooks/useToken";
 
 function App() {
   return (
@@ -28,21 +29,33 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/lists" element={<Lists/>} />
-          <Route path="/lists/:listId" element={<EditList/>} /> 
-          <Route path="/buy" element={<Buy/>} />
-          <Route path="/buy/:listId" element={<BuyList/>} />
-          <Route path="/buy/:listId/:listLocalId" element={<BuyLocal/>} />
-          <Route path="/history" element={<History/>} />
-          <Route path="/share" element={<Share/>} />
-          <Route path="/share/requests" element={<Request/>} />
-          <Route path="/profile" element={<Profile/>} />
-          <Route path="/*" element={<Navigate to="/" />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/lists" element={<Lists/>} />
+            <Route path="/lists/:listId" element={<EditList/>} /> 
+            <Route path="/buy" element={<Buy/>} />
+            <Route path="/buy/:listId" element={<BuyList/>} />
+            <Route path="/buy/:listId/:listLocalId" element={<BuyLocal/>} />
+            <Route path="/history" element={<History/>} />
+            <Route path="/share" element={<Share/>} />
+            <Route path="/share/requests" element={<Request/>} />
+            <Route path="/profile" element={<Profile/>} />
+            <Route path="/*" element={<Navigate to="/lists" />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </UserProvider>
     </>
   )
+}
+
+function ProtectedRoute(){
+  const token = useToken();
+
+  if(!token){
+    return <Navigate to="/" />;
+  }
+  
+  return <Outlet />;
 }
 
 export default App
