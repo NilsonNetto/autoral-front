@@ -26,7 +26,7 @@ export default function ListBox ({listData}){
       </ListName>
       <ListOptions>
         <BiDotsVerticalRounded onClick={() => toggleMenu()}/>
-        <ListMenu show={showMenu} listId={listData.id} toggleMenu={toggleMenu}/>
+        <ListMenu show={showMenu} listId={listData.Lists.id} toggleMenu={toggleMenu}/>
       </ListOptions>
     </ListBoxWrapper>
   )
