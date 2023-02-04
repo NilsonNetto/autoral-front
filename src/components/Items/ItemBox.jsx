@@ -1,8 +1,12 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { toast } from "react-toastify";
 
 import ItemMenu from "./ItemMenu";
 import SmallButton from "../Form/SmallButton";
+
+import useCheckItem from "../../hooks/api/Items/useCheckItem"
+import useUpdateItem from "../../hooks/api/Items/useUpdateItem"
 
 export default function ItemBox({itemData}){
   const [itemCheck, setItemCheck] = useState(itemData.checked);
@@ -11,6 +15,47 @@ export default function ItemBox({itemData}){
   const [itemUnit, setItemUnit] = useState(itemData.unit);
   const [showMenu, setShowMenu] = useState(false);
   const [editItem, setEditItem] = useState(false);
+  const { checkItem } = useCheckItem();
+  const { updateItem } = useUpdateItem();
+
+  async function submitCheck(){
+    try {
+      await checkItem(itemData.id)
+      setItemCheck(!itemCheck)
+    } catch (error) {
+      toast('Não foi possivel marcar o item')
+    }
+  }
+
+  async function submitUpdate(){
+    const body = {
+      name: itemName,
+      unit: itemUnit,
+      quantity: itemQuantity
+    }
+    try {
+      await updateItem(itemData.id, body)
+      toast('Item atualizado!')
+    } catch (error) {
+      toast('Não foi possível atualizar o item')
+    }
+  }
+
+  function toggleMenu(){
+    setShowMenu(!showMenu)
+  }
+
+  function toggleEdit(){
+    setEditItem(!editItem);
+  }
+
+  function itemButton(){
+    if(!editItem){
+      return toggleMenu()
+    }
+    submitUpdate();
+    toggleEdit();
+  }
 
   return(
     <ItemBoxWrapper>
@@ -18,7 +63,7 @@ export default function ItemBox({itemData}){
         type='checkbox'
         checked={itemCheck}
         value={itemCheck}
-        onChange={() => setItemCheck(!itemCheck)}
+        onChange={() => submitCheck()}
       />
       <ItemName 
         placeholder='Nome do item'
@@ -45,9 +90,9 @@ export default function ItemBox({itemData}){
         <option value={'un'}>Un.</option>
         <option value={'kgs'}>Kgs</option>
       </UnitBox>
-      <Confirm onClick={()=>setShowMenu(!showMenu)}>
-        <SmallButton/>
-        <ItemMenu show={showMenu} setEditItem={setEditItem}/>
+      <Confirm onClick={()=>itemButton()}>
+        <SmallButton type={editItem ? 'update' : ''}/>
+        <ItemMenu show={showMenu} toggleEdit={toggleEdit} itemId={itemData.id}/>
       </Confirm>
     </ItemBoxWrapper>
   )

@@ -27,15 +27,6 @@ export async function postList(body, token) {
   return response.data;
 }
 
-export async function postFinishList(listId, token) {
-  const response = await api.post(`/list/finish/${listId}`, {}, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
-  return response.data;
-}
-
 export async function deleteList(listId, token) {
   const response = await api.delete(`/list/${listId}`, {
     headers: {

@@ -7,16 +7,16 @@ import ConfirmModal from "../Modal/ConfirmModal";
 import InputModal from "../Modal/InputModal";
 
 import usePostShare from "../../hooks/api/Share/usePostShare";
-import useFinishList from "../../hooks/api/Lists/useFinishList";
+import useDeleteList from "../../hooks/api/Lists/useDeleteList";
 
 export default function ListMenu({show, listId, toggleMenu}){
   const [shareModal, setShareModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
-  const [finishModal, setFinishModal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const [newListName, setNewListName] = useState('');
   const { postShare } = usePostShare();
-  const { finishList } = useFinishList();
+  const { deleteList } = useDeleteList();
 
   function toggleShareModal(){
     setShareModal(!shareModal);
@@ -28,10 +28,6 @@ export default function ListMenu({show, listId, toggleMenu}){
 
   function toggleDeleteModal(){
     setDeleteModal(!deleteModal);
-  }
-
-  function toggleFinishModal(){
-    setFinishModal(!finishModal);
   }
 
   async function submitShare(){
@@ -46,12 +42,16 @@ export default function ListMenu({show, listId, toggleMenu}){
     }
   }
 
-  async function submitFinish(){
+  async function submitEdit(){
+
+  }
+
+  async function submitDelete(){
     try {
-      finishList(listId)
-      toast('Lista finalizada!')
+      deleteList(listId)
+      toast('Lista deletada!')
     } catch (error) {
-      toast('Não foi possível finalizar lista')
+      toast('Não foi possível deletar lista')
     }
   }
 
@@ -68,31 +68,32 @@ export default function ListMenu({show, listId, toggleMenu}){
         placeholder='Email do usuário'
         value={userEmail}
         onChange={setUserEmail}
-        confirm={() => submitShare()}
+        confirm={submitShare}
       >
             Insira o email do usuário
       </InputModal>
       </div>
       <div onClick={() => toggleEditModal()}>
         Editar Lista
+        <InputModal
+        isOpen={editModal}
+        toggleModal={toggleEditModal}
+        placeholder='Nome da lista'
+        value={newListName}
+        onChange={setNewListName}
+        confirm={submitEdit}
+      >
+            Insira o novo nome da lista
+      </InputModal>
       </div>
       <div onClick={() => toggleDeleteModal()}>
         Excluir Lista
         <ConfirmModal
           isOpen={deleteModal}
           toggleModal={toggleDeleteModal}
+          confirm={submitDelete}
         >
           Excluir lista?
-        </ConfirmModal>
-      </div>
-      <div onClick={() => toggleFinishModal()}>
-        Finalizar Lista
-        <ConfirmModal
-          isOpen={finishModal}
-          toggleModal={toggleFinishModal}
-          confirm={submitFinish}
-        >
-          Finalizar lista?
         </ConfirmModal>
       </div>
     </ListMenuWrapper>

@@ -3,50 +3,49 @@ import { useState } from "react";
 
 import ConfirmModal from "../Modal/ConfirmModal";
 
-import useDeleteItem from "../../hooks/api/Items/useDeleteItem";
+import useDeleteLocal from "../../hooks/api/Locals/useDeleteLocal"
 import { toast } from "react-toastify";
 
-export default function ItemMenu({...props}){
+export default function LocalMenu({...props}){
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const { deleteItem } = useDeleteItem();
+  const { deleteLocal } = useDeleteLocal();
 
   function toggleModal(){
     setModalIsOpen(!modalIsOpen);
   }
 
   async function submitDelete(){
-
     try {
-      await deleteItem(props.itemId);
-      toggleModal();
-      toast('Item deletado')
+      await deleteLocal(props.listLocalId)
+      toggleModal()
+      toast('Local deletado!');
     } catch (error) {
-      toast('Não foi possível deletar o item')
+      toast('Não foi possível deletar o local');
     }
   }
 
-   return(
+  return(
     <>
-    <ItemMenuWrapper show={props.show}>
+    <LocalMenuWrapper show={props.show}>
       <div onClick={() => props.toggleEdit()}>
-        Editar Item
+        Editar local
       </div>
       <div onClick={() => toggleModal()}>
-        Excluir Item
+        Excluir local
       </div>
-    </ItemMenuWrapper>
+    </LocalMenuWrapper>
     <ConfirmModal  
       isOpen={modalIsOpen}
       confirm={submitDelete}
       toggleModal={toggleModal}
     >
-      Excluir item?
+      Excluir local?
     </ConfirmModal>
     </>
   )
 }
 
-const ItemMenuWrapper = styled.div`
+const LocalMenuWrapper = styled.div`
   position: absolute;
   top: 0;
   right: 0;

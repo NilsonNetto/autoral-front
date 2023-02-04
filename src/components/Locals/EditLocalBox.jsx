@@ -4,20 +4,24 @@ import { toast } from "react-toastify";
 
 import CustomInput from "../Form/CustomInput";
 import EditItemBox from "../Items/EditItemBox";
-import ConfirmButton from "../Form/SmallButton";
 import SmallButton from "../Form/SmallButton";
+import LocalMenu from "./LocalMenu";
 
 import usePostItem from "../../hooks/api/Items/usePostItem";
 import useGetItems from "../../hooks/api/Items/useGetItems";
+import useUpdateLocal from "../../hooks/api/Locals/useUpdateLocal";
 
 export default function EditLocalBox ({localData}){
   const [localName, setLocalName] = useState(localData.LocalsName.name);
   const [itemName, setItemName] = useState('');
   const [itemQuantity, setItemQuantity] = useState('');
-  const [itemUnit, setItemUnit] = useState('');
+  const [itemUnit, setItemUnit] = useState('un');
+  const [editListName, setEditListName] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const [refreshItems, setRefreshItems] = useState(false);
   const { postItem } = usePostItem();
   const { getItemsData, getItems } = useGetItems();
+  const { updateLocal } = useUpdateLocal();
 
   useEffect(()=>{
     getItems(localData.id)
@@ -26,7 +30,7 @@ export default function EditLocalBox ({localData}){
   function clearItem(){
     setItemName('');
     setItemQuantity('');
-    setItemUnit('');
+    setItemUnit('un');
     setRefreshItems(!refreshItems)
   }
 
@@ -46,6 +50,33 @@ export default function EditLocalBox ({localData}){
     }
   }
 
+  async function submitUpdate(){
+    const body = {
+      name: localName
+    }
+    try {
+      await updateLocal(localData.id, body)
+      toast('Nome da lista atualizado')
+    } catch (error) {
+      toast('Não foi possível atualizar a lista')
+    }
+  }
+
+  function toggleEditListName(){
+    setEditListName(!editListName);
+  }
+
+  function toggleMenu(){
+    setShowMenu(!showMenu);
+  }
+
+  function listButton(){
+    if(!editListName){
+      return toggleMenu()
+    }
+    submitUpdate();
+    toggleEditListName();
+  }
 
   return(
     <EditLocalBoxWrapper>
@@ -56,11 +87,12 @@ export default function EditLocalBox ({localData}){
           type='text'
           value={localName}
           onChange={setLocalName}
-          disabled={false}
+          disabled={!editListName}
           required={true}
           />
-        <Confirm onClick={()=>submitLocal()}>
-          <ConfirmButton />
+        <Confirm onClick={()=>listButton()}>
+          <SmallButton type={editListName ? 'update' : ''}/>
+          <LocalMenu show={showMenu} toggleEdit={toggleEditListName} listLocalId={localData.id}/>
         </Confirm>
       </LocalTitle>
       <ItemsWrapper>

@@ -1,8 +1,11 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { toast } from "react-toastify";
 
 import ItemMenu from "../Items/ItemMenu";
 import SmallButton from "../Form/SmallButton";
+
+import useUpdateItem from "../../hooks/api/Items/useUpdateItem"
 
 export default function EditItemBox({itemData}){
   const [itemName, setItemName] = useState(itemData.ItemName.name);
@@ -10,9 +13,36 @@ export default function EditItemBox({itemData}){
   const [itemUnit, setItemUnit] = useState(itemData.unit);
   const [showMenu, setShowMenu] = useState(false);
   const [editItem, setEditItem] = useState(false);
+  const { updateItem } = useUpdateItem();
 
   function toggleMenu(){
     setShowMenu(!showMenu);
+  }
+
+  function toggleEditItem(){
+    setEditItem(!editItem);
+  }
+
+  async function submitUpdate(){
+    const body = {
+      name: itemName,
+      quantity: itemQuantity,
+      unit: itemUnit
+    }
+    try {
+      await updateItem(itemData.id, body)
+      toast('Item alterado!')
+    } catch (error) {
+      toast('Não foi possível alterar o item')
+    }
+  }
+
+  function itemButton(){
+    if(!editItem){
+      return toggleMenu();
+    }
+    submitUpdate();
+    toggleEditItem();
   }
 
   return(
@@ -42,9 +72,9 @@ export default function EditItemBox({itemData}){
         <option value={'un'}>Un.</option>
         <option value={'kgs'}>Kgs</option>
       </UnitBox>
-      <Confirm onClick={()=>toggleMenu()}>
+      <Confirm onClick={()=>itemButton()}>
         <SmallButton type={editItem ? 'update' : ''}/>
-        <ItemMenu show={showMenu} setEditItem={setEditItem}/>
+        <ItemMenu show={showMenu} toggleEdit={toggleEditItem} itemId={itemData.id}/>
       </Confirm>
     </EditItemBoxWrapper>
   )
