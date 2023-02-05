@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import ListMenu from "./ListMenu";
 
-export default function ListBox ({listData}){
+export default function ListBox ({listData, refresh}){
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ export default function ListBox ({listData}){
       </ListName>
       <ListOptions>
         <BiDotsVerticalRounded onClick={() => toggleMenu()}/>
-        <ListMenu show={showMenu} listId={listData.Lists.id} toggleMenu={toggleMenu}/>
+        <ListMenu show={showMenu} listId={listData.Lists.id} toggleMenu={toggleMenu} refresh={refresh}/>
       </ListOptions>
     </ListBoxWrapper>
   )

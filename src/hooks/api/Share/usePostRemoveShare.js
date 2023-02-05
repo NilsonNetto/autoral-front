@@ -10,7 +10,7 @@ export default function usePostRemoveShare() {
     loading: postRemoveShareLoading,
     error: postRemoveShareError,
     act: postRemoveShare
-  } = useAsync((listId, userId) => shareApi.postRemoveShare(listId, userId, token), false);
+  } = useAsync((requestId) => shareApi.postRemoveShare(requestId, token), false);
 
   return {
     postRemoveShareLoading,

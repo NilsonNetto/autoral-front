@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { toast } from "react-toastify";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Loading from "./Loading";
@@ -13,6 +13,7 @@ import useGetItems from "../hooks/api/Items/useGetItems";
 import useFinishLocal from "../hooks/api/Locals/useFinishLocal";
 
 export default function BuyLocal(){
+  const [refreshItems, setRefreshItems] = useState(false);
   const { listId, listLocalId } = useParams();
   const { getItemsData, getItemsLoading, getItems } = useGetItems();
   const { finishLocal } = useFinishLocal();
@@ -20,7 +21,7 @@ export default function BuyLocal(){
 
   useEffect(()=>{
     getItems(listLocalId);
-  },[])
+  },[refreshItems])
 
   async function submitFinish(){
     try {
@@ -32,6 +33,10 @@ export default function BuyLocal(){
     }
   }
 
+  function toggleRefreshItems(){
+    setRefreshItems(!refreshItems)
+  }
+
   return(
     getItemsLoading ? (
       <Loading />
@@ -40,7 +45,7 @@ export default function BuyLocal(){
         <Header>
           Iniciar Compra
         </Header>
-        {getItemsData ? <LocalBox localData={getItemsData}/> : <></>}     
+        {getItemsData ? <LocalBox localData={getItemsData} refresh={toggleRefreshItems}/> : <></>}     
         <Button onClick={submitFinish} topMargin={'30px'}>
           FINALIZAR COMPRA
         </Button>

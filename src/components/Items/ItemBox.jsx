@@ -8,7 +8,7 @@ import SmallButton from "../Form/SmallButton";
 import useCheckItem from "../../hooks/api/Items/useCheckItem"
 import useUpdateItem from "../../hooks/api/Items/useUpdateItem"
 
-export default function ItemBox({itemData}){
+export default function ItemBox({itemData, refresh}){
   const [itemCheck, setItemCheck] = useState(itemData.checked);
   const [itemName, setItemName] = useState(itemData.ItemName.name);
   const [itemQuantity, setItemQuantity] = useState(itemData.quantity);
@@ -92,7 +92,7 @@ export default function ItemBox({itemData}){
       </UnitBox>
       <Confirm onClick={()=>itemButton()}>
         <SmallButton type={editItem ? 'update' : ''}/>
-        <ItemMenu show={showMenu} toggleEdit={toggleEdit} itemId={itemData.id}/>
+        <ItemMenu show={showMenu} toggleEdit={toggleEdit} itemId={itemData.id} refresh={refresh}/>
       </Confirm>
     </ItemBoxWrapper>
   )

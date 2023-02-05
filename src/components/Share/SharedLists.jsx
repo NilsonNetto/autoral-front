@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import SharedBox from "./SharedBox";
 
-export default function SharedLists({children, listsData}){
+export default function SharedLists({children, listsData, refresh}){
   return (
     <SharedListsWrapper>
       <Title>
@@ -12,7 +12,7 @@ export default function SharedLists({children, listsData}){
         {listsData?.length === 0 ? (
           <p>Você ainda não tem listas para exibir</p>
           ) : (
-          listsData?.map((list) => <SharedBox key={list.id} sharedData={list}/>)
+          listsData?.map((list) => <SharedBox key={list.id} sharedData={list} refresh={refresh}/>)
         )}
       </Lists>      
     </SharedListsWrapper>

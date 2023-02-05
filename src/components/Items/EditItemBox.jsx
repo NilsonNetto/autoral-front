@@ -7,7 +7,7 @@ import SmallButton from "../Form/SmallButton";
 
 import useUpdateItem from "../../hooks/api/Items/useUpdateItem"
 
-export default function EditItemBox({itemData}){
+export default function EditItemBox({itemData, refresh}){
   const [itemName, setItemName] = useState(itemData.ItemName.name);
   const [itemQuantity, setItemQuantity] = useState(itemData.quantity);
   const [itemUnit, setItemUnit] = useState(itemData.unit);
@@ -74,7 +74,7 @@ export default function EditItemBox({itemData}){
       </UnitBox>
       <Confirm onClick={()=>itemButton()}>
         <SmallButton type={editItem ? 'update' : ''}/>
-        <ItemMenu show={showMenu} toggleEdit={toggleEditItem} itemId={itemData.id}/>
+        <ItemMenu show={showMenu} toggleEdit={toggleEditItem} itemId={itemData.id} refresh={refresh}/>
       </Confirm>
     </EditItemBoxWrapper>
   )

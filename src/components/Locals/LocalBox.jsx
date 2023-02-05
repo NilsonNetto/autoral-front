@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import ItemBox from "../Items/ItemBox";
 
-export default function LocalBox({localData}){
+export default function LocalBox({localData, refresh}){
   
   return(
     <LocalBoxWrapper>
@@ -10,7 +10,7 @@ export default function LocalBox({localData}){
         {localData.LocalsName.name}
       </LocalTitle>
       <ItemsWrapper>
-        {localData.Items.map(itemData => <ItemBox key={itemData.id} itemData={itemData} />)}
+        {localData.Items.map(itemData => <ItemBox key={itemData.id} itemData={itemData} refresh={refresh}/>)}
       </ItemsWrapper>
     </LocalBoxWrapper>
   )

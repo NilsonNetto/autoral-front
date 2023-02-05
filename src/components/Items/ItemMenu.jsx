@@ -19,6 +19,7 @@ export default function ItemMenu({...props}){
     try {
       await deleteItem(props.itemId);
       toggleModal();
+      props.refresh();
       toast('Item deletado')
     } catch (error) {
       toast('Não foi possível deletar o item')

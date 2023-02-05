@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 
 import Loading from "./Loading";
 import Header from "../components/Header/Header";
@@ -8,8 +9,17 @@ import RequestBox from "../components/Share/RequestBox";
 import useGetShareRequests from "../hooks/api/Share/useGetShareRequests";
 
 export default function Request(){
-  const { getShareRequestsData, getShareRequestsLoading } = useGetShareRequests();
-  
+  const { getShareRequestsData, getShareRequestsLoading, getShareRequests } = useGetShareRequests();
+  const [refreshRequests,setRefreshRequests] = useState(false);
+
+  useEffect(()=>{
+    getShareRequests();
+  }, [refreshRequests])
+
+  function toggleRefreshRequests(){
+    setRefreshRequests(!refreshRequests)
+  }
+
   return(
     getShareRequestsLoading ? (
       <Loading />
@@ -19,7 +29,7 @@ export default function Request(){
           Solicitações
         </Header>
         <RequestsList>
-          {getShareRequestsData?.map(request => <RequestBox key={request.id} requestData={request} />)}
+          {getShareRequestsData?.map(request => <RequestBox key={request.id} requestData={request} refresh={toggleRefreshRequests}/>)}
         </RequestsList>
         <Menu />
       </RequestContainer>

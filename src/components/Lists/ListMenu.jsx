@@ -7,15 +7,17 @@ import ConfirmModal from "../Modal/ConfirmModal";
 import InputModal from "../Modal/InputModal";
 
 import usePostShare from "../../hooks/api/Share/usePostShare";
+import useUpdateList from "../../hooks/api/Lists/useUpdateList"
 import useDeleteList from "../../hooks/api/Lists/useDeleteList";
 
-export default function ListMenu({show, listId, toggleMenu}){
+export default function ListMenu({show, listId, toggleMenu, refresh}){
   const [shareModal, setShareModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const [newListName, setNewListName] = useState('');
   const { postShare } = usePostShare();
+  const { updateList } = useUpdateList();
   const { deleteList } = useDeleteList();
 
   function toggleShareModal(){
@@ -35,7 +37,7 @@ export default function ListMenu({show, listId, toggleMenu}){
       email: userEmail
     }
     try {
-      postShare(listId, shareData);
+      await postShare(listId, shareData);
       toast('Solicitação de compartilhamento enviada!');
     } catch (error) {
       toast('Não foi possível compartilhar a lista');
@@ -43,12 +45,22 @@ export default function ListMenu({show, listId, toggleMenu}){
   }
 
   async function submitEdit(){
-
+    const body = {
+      name: newListName
+    }
+    try {
+      await updateList(listId, body)
+      refresh();
+      toast('Noma da lista alterada');
+    } catch (error) {
+      toast('Não foi possível alterar lista')
+    }
   }
 
   async function submitDelete(){
     try {
-      deleteList(listId)
+      await deleteList(listId)
+      refresh();
       toast('Lista deletada!')
     } catch (error) {
       toast('Não foi possível deletar lista')

@@ -6,13 +6,14 @@ import usePostAcceptShare from "../../hooks/api/Share/usePostAcceptShare";
 import usePostRefuseShare from "../../hooks/api/Share/usePostRefuseShare";
 
 
-export default function RequestBox({requestData}){
+export default function RequestBox({requestData, refresh}){
   const { postAcceptShare } = usePostAcceptShare();
   const { postRefuseShare } = usePostRefuseShare();
 
   async function acceptRequest(){
     try {
       await postAcceptShare(requestData.id)
+      refresh();
       toast('Solicitação aceita!')
     } catch (error) {
       toast('Não foi possível aceitar a solicitação')
@@ -23,6 +24,7 @@ export default function RequestBox({requestData}){
     try {
       await postRefuseShare(requestData.id)
       toast('Solicitação rejeitada!')
+      refresh();
     } catch (error) {
       toast('Não foi possível rejeitar a solicitação')
     }

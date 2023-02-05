@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -17,9 +17,14 @@ import usePostList from "../hooks/api/Lists/usePostList";
 export default function Lists (){
   const [listName, setListName] = useState('');
   const [openModal, setOpenModal] = useState(false);
-  const { getListsData, getListsLoading } = useGetLists();
+  const [refreshLists, setRefreshLists] = useState(false);
+  const { getListsData, getListsLoading, getLists } = useGetLists();
   const { postList } = usePostList();
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    getLists();
+  }, [refreshLists])
 
   async function submitList(){
     try {
@@ -36,6 +41,10 @@ export default function Lists (){
 
   function toggleModal(){
     setOpenModal(!openModal);
+  }
+
+  function toggleRefreshLists(){
+    setRefreshLists(!refreshLists);
   }
 
   return(
@@ -63,7 +72,7 @@ export default function Lists (){
       </ButtonWrapper>
     <ListsWrapper >
       {getListsData ? (
-        getListsData.map((listData) => <ListBox key={listData.id} listData={listData} />)
+        getListsData.map((listData) => <ListBox key={listData.id} listData={listData} refresh={toggleRefreshLists} />)
       ) : (
         <EmptyLists />
       )

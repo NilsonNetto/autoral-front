@@ -7,7 +7,7 @@ import ConfirmModal from "../Modal/ConfirmModal";
 
 import usePostRemoveShare from "../../hooks/api/Share/usePostRemoveShare";
 
-export default function SharedBox({sharedData}){
+export default function SharedBox({sharedData, refresh}){
   const { postRemoveShare } = usePostRemoveShare();
   const [user, setUser] = useState({});
   const [openModal, setOpenModal] = useState(false);
@@ -19,8 +19,9 @@ export default function SharedBox({sharedData}){
 
   async function removeShare(){
     try {
-      await postRemoveShare(sharedData.Lists.id, user.id)
+      await postRemoveShare(sharedData.id)
       toast('Compartilhamento removido!');
+      refresh();
     } catch (error) {
       toast('Não foi possível remover o compartilhamento!')
     }

@@ -27,6 +27,15 @@ export async function postList(body, token) {
   return response.data;
 }
 
+export async function putList(listId, body, token) {
+  const response = await api.put(`/list/${listId}`, body, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  return response.data;
+}
+
 export async function deleteList(listId, token) {
   const response = await api.delete(`/list/${listId}`, {
     headers: {

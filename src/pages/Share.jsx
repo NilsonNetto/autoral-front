@@ -1,5 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Loading from "./Loading";
 import Menu from "../components/FooterMenu/Menu";
@@ -13,9 +14,19 @@ import useGetShareRequest from "../hooks/api/Share/useGetShareRequests";
 
 export default function Share(){
   const navigate = useNavigate();
+  const [refreshShares, setRefreshShares] = useState(false);
   const { getSharedData, getSharedLoading } = useGetShared();
-  const { getSharedOwnedData } = useGetSharedOwned();
-  const { getShareRequestsData } = useGetShareRequest();
+  const { getSharedOwnedData, getSharedOwned } = useGetSharedOwned();
+  const { getShareRequestsData, getShareRequests } = useGetShareRequest();
+
+  useEffect(()=>{
+    getShareRequests();
+    getSharedOwned();
+  },[refreshShares])
+
+  function toggleRefreshShares(){
+    setRefreshShares(!refreshShares);
+  }
 
   function requestPageRedirect(){
     if(getShareRequestsData.length !== 0){
@@ -40,10 +51,10 @@ export default function Share(){
             `Você tem ${getShareRequestsData?.length} novas solicitações`
           ))}
         </Button>
-        <SharedLists listsData={getSharedData}>
+        <SharedLists listsData={getSharedData} refresh={toggleRefreshShares}>
           Listas compartilhadas comigo
         </SharedLists>
-        <SharedLists listsData={getSharedOwnedData}>
+        <SharedLists listsData={getSharedOwnedData} refresh={toggleRefreshShares}>
           Listas que compartilhei
         </SharedLists>
         <Menu />

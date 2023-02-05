@@ -30,8 +30,8 @@ export default function EditLocalBox ({localData}){
   function clearItem(){
     setItemName('');
     setItemQuantity('');
-    setItemUnit('un');
-    setRefreshItems(!refreshItems)
+    setItemUnit(itemUnit);
+    toggleRefreshItems();
   }
 
   async function submitItem(){
@@ -78,6 +78,10 @@ export default function EditLocalBox ({localData}){
     toggleEditListName();
   }
 
+  function toggleRefreshItems(){
+    setRefreshItems(!refreshItems);
+  }
+
   return(
     <EditLocalBoxWrapper>
       <LocalTitle>
@@ -96,7 +100,7 @@ export default function EditLocalBox ({localData}){
         </Confirm>
       </LocalTitle>
       <ItemsWrapper>
-        {getItemsData?.Items.map(itemData => <EditItemBox key={itemData.id} itemData={itemData}/>)}
+        {getItemsData?.Items.map(itemData => <EditItemBox key={itemData.id} itemData={itemData} refresh={toggleRefreshItems}/>)}
       
       <NewItem>
         <ItemName 

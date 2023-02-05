@@ -54,8 +54,8 @@ export async function postRefuseShare(requestId, token) {
   return response.data;
 }
 
-export async function postRemoveShare(listId, userId, token) {
-  const response = await api.post(`/share/remove/${listId}/${userId}`, {}, {
+export async function postRemoveShare(requestId, token) {
+  const response = await api.post(`/share/remove/${requestId}`, {}, {
     headers: {
       Authorization: `Bearer ${token}`
     }
