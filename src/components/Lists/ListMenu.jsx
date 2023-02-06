@@ -74,40 +74,40 @@ export default function ListMenu({show, listId, toggleMenu, refresh}){
       </CloseMenu>
       <div onClick={() => toggleShareModal()}>
         Compartilhar Lista
-        <InputModal
-        isOpen={shareModal}
-        toggleModal={toggleShareModal}
-        placeholder='Email do usuário'
-        value={userEmail}
-        onChange={setUserEmail}
-        confirm={submitShare}
-      >
+      </div>
+      <InputModal
+          isOpen={shareModal}
+          toggleModal={toggleShareModal}
+          placeholder='Email do usuário'
+          value={userEmail}
+          onChange={setUserEmail}
+          confirm={submitShare}
+        >
             Insira o email do usuário
       </InputModal>
-      </div>
       <div onClick={() => toggleEditModal()}>
         Editar Lista
-        <InputModal
-        isOpen={editModal}
-        toggleModal={toggleEditModal}
-        placeholder='Nome da lista'
-        value={newListName}
-        onChange={setNewListName}
-        confirm={submitEdit}
-      >
+      </div>
+      <InputModal
+          isOpen={editModal}
+          toggleModal={toggleEditModal}
+          placeholder='Nome da lista'
+          value={newListName}
+          onChange={setNewListName}
+          confirm={submitEdit}
+        >
             Insira o novo nome da lista
       </InputModal>
-      </div>
       <div onClick={() => toggleDeleteModal()}>
         Excluir Lista
-        <ConfirmModal
+      </div>
+      <ConfirmModal
           isOpen={deleteModal}
           toggleModal={toggleDeleteModal}
           confirm={submitDelete}
         >
           Excluir lista?
-        </ConfirmModal>
-      </div>
+      </ConfirmModal>
     </ListMenuWrapper>
   )
 }

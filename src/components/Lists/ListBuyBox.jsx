@@ -14,7 +14,7 @@ export default function ListBuyBox ({listData}){
     <ListBoxWrapper onClick={()=>toListLocals(listData.Lists.id)}>
       <ListName>
         <span>{listData.Lists.name}</span>
-        <span>{dayjs(listData.createdAt).format('DD/MM')}</span>
+        <span>{dayjs(listData.createdAt).locale('pt-br').format('DD/MMM')}</span>
       </ListName>
     </ListBoxWrapper>
   )
@@ -29,7 +29,7 @@ const ListBoxWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   color: #D96E6B;
-  padding: 0 5px 0 15px;
+  padding: 0 15px 0 15px;
   position: relative;
 `
 

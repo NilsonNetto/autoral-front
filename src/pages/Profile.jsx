@@ -19,8 +19,9 @@ export default function Profile(){
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [photo, setPhoto] = useState('');
+  const [photoRefresh, setPhotoRefresh] = useState(false);
 
-  const { getProfileData, getProfileLoading } = useGetProfile();
+  const { getProfileData, getProfileLoading, getProfile } = useGetProfile();
   const { updateProfileLoading, updateProfile } = useUpdateProfile();
 
   useEffect(() =>{
@@ -30,6 +31,10 @@ export default function Profile(){
       setPhoto(getProfileData.profilePicture);
     }
   }, [getProfileData])
+
+  useEffect(()=>{
+    getProfile();
+  },[photoRefresh])
 
   async function submitUpdate(){
     if(password !== passwordConfirm){
@@ -49,6 +54,10 @@ export default function Profile(){
     }
   }
 
+  function togglePhotoRefresh(){
+    setPhotoRefresh(!photoRefresh);
+  }
+
   return(
     getProfileLoading ? (
       <Loading />
@@ -58,7 +67,7 @@ export default function Profile(){
           Perfil
         </Header>
         <PictureWrapper>
-          <Picture photo={photo}/>
+          <Picture photo={photo} refresh={togglePhotoRefresh}/>
         </PictureWrapper>
         <FormsWrapper>
           <CustomInput

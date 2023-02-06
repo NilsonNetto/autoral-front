@@ -24,6 +24,7 @@ export default function Picture({...props}){
     try {
       await updatePicture(profilePicture);
       toggleModal();
+      props.refresh();
       toast('Foto de perfil atualizados!');
     } catch (error) {
       toast('Erro ao atualizar foto');
