@@ -20,7 +20,7 @@ export default function Buy(){
           Iniciar Compra
         </Header>
         <ListsWrapper>
-          {getListsData ? (
+          {getListsData?.length !== 0 ? (
             getListsData.map((listData) => <ListBuyBox key={listData.id} listData={listData} />)
           ) : (
             <EmptyLists />

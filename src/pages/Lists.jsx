@@ -71,7 +71,7 @@ export default function Lists (){
       </InputModal>
       </ButtonWrapper>
     <ListsWrapper >
-      {getListsData ? (
+      {getListsData?.length !== 0 ? (
         getListsData.map((listData) => <ListBox key={listData.id} listData={listData} refresh={toggleRefreshLists} />)
       ) : (
         <EmptyLists />
